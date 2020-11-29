@@ -1,0 +1,28 @@
+@media screen and (min-width: 600px) {
+  .authForms {
+    max-width: 40%;
+  }
+}
+
+body {
+  padding-top: 80px;
+}
+
+.brandImage {
+  height: 35px;
+  width: 35px;
+}
+
+.alertDiv {
+  min-height: 66px;
+}
+
+.ad {
+  border: solid blue;
+  height: 280px;
+}
+
+.imageCanvas {
+  margin: auto;
+  max-width: 930px;
+}
