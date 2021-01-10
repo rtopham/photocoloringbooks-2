@@ -36,7 +36,7 @@ router.post('/', auth, async (req, res) => {
       // Upload and save file to file system.
       const ext = '.png'
       const targetPath = path.resolve(`uploads/pages/${imgUrl}${ext}`)
-      const { caption, tags, srcBlob } = req.body
+      const { caption, tags } = req.body
 
       pageFile.mv(targetPath, async (error) => {
         if (error) {
@@ -51,7 +51,7 @@ router.post('/', auth, async (req, res) => {
           const newPage = new Page({
             filename: imgUrl + ext,
             caption,
-            tags,
+            tags: JSON.parse(tags),
             postedBy: req.user.id
           })
           const page = await newPage.save()
@@ -66,6 +66,68 @@ router.post('/', auth, async (req, res) => {
   }
 
   savePage()
+})
+
+//@route    PUT api/pages
+//@desc     Update Page Caption and Tags
+//@access   Private
+
+router.put(
+  '/:id',
+
+  auth,
+
+  async (req, res) => {
+    const { caption, tags } = req.body
+
+    const pageFields = {}
+    if (caption) pageFields.caption = caption
+    if (tags) pageFields.tags = tags
+
+    try {
+      let page = await Page.findById(req.params.id)
+      if (!page) return res.status(404).json({ msg: 'Page not found' })
+
+      //Make sure user owns page
+      if (page.postedBy.toString() !== req.user.id) {
+        return res.status(401).json({ msg: 'Not Authorized' })
+      }
+
+      page = await Page.findByIdAndUpdate(
+        req.params.id,
+        { $set: pageFields },
+        { new: true }
+      )
+      res.json(page)
+    } catch (err) {
+      console.error(err.message)
+      res.status(500).send('Server Error.')
+    }
+  }
+)
+
+// @route   DELETE api/pages/:id
+// @desc    Delete page
+// @access  Private
+
+router.delete('/:id', auth, async (req, res) => {
+  try {
+    const page = await Page.findById(req.params.id)
+    if (!page) return res.status(404).json({ msg: 'Page not found' })
+
+    //   Make sure user owns page
+    if (page.postedBy.toString() !== req.user.id) {
+      return res.status(401).json({ msg: 'Not Authorized' })
+    }
+    await Page.findByIdAndRemove(req.params.id)
+    fs.unlink(path.resolve(`uploads/pages/${page.filename}`), (err) => {
+      if (err) throw err
+    })
+    res.json(page)
+  } catch (err) {
+    console.error(err.message)
+    res.status(500).send('Server Error')
+  }
 })
 
 //@route    GET api/pages

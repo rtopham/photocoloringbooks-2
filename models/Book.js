@@ -1,13 +1,38 @@
 const mongoose = require('mongoose')
 
-const PageSchema = new mongoose.Schema({
-  filename: {
-    type: String,
-    required: 'Filename is required'
-  },
-  caption: {
+const BookSchema = new mongoose.Schema({
+  title: {
     type: String,
     default: ''
+  },
+  pages: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Page'
+    }
+  ],
+  coverPage: {
+    title: {
+      type: String
+    },
+    textLine1: {
+      type: String
+    },
+    textLine2: {
+      type: String
+    },
+    textLine3: {
+      type: String
+    },
+    coverPage: {
+      type: String
+    },
+    coverPageType: {
+      type: String
+    },
+    footer: {
+      type: String
+    }
   },
   tags: [
     {
@@ -29,8 +54,7 @@ const PageSchema = new mongoose.Schema({
         ref: 'User'
       },
       text: {
-        type: String,
-        required: true
+        type: String
       },
       name: {
         type: String
@@ -51,4 +75,4 @@ const PageSchema = new mongoose.Schema({
   postedBy: { type: mongoose.Schema.ObjectId, ref: 'User' }
 })
 
-module.exports = mongoose.model('Page', PageSchema)
+module.exports = mongoose.model('Book', BookSchema)

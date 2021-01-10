@@ -4,9 +4,18 @@ import {
   SET_PAGE_URL,
   SET_PAGE_BLOB,
   SAVE_PAGE,
-  CLOSE_MODAL,
+  UPDATE_PAGE,
+  SET_CURRENT_PAGE,
+  OPEN_EDIT_MODAL,
+  CLOSE_EDIT_MODAL,
+  OPEN_DELETE_MODAL,
+  CLOSE_DELETE_MODAL,
   GALLERY_LOADED,
-  GALLERY_ERROR
+  GALLERY_ERROR,
+  FILTER_PAGES,
+  CLEAR_FILTER,
+  DELETE_PAGE,
+  SET_TAG_LIST
 } from './types'
 import { setAlert } from './alert'
 
@@ -32,11 +41,6 @@ export const setPageBlob = (srcBlob) => (dispatch) => {
 //Save Page info in mongo
 
 export const savePage = (formData) => async (dispatch) => {
-  /*   const page = {
-    caption: formData.caption,
-    tags: formData.tags
-  } */
-
   try {
     const res = await api.post('/pages', formData)
     dispatch({ type: SAVE_PAGE, payload: res.data })
@@ -50,16 +54,80 @@ export const savePage = (formData) => async (dispatch) => {
   }
 }
 
+// Set Current Page for Editing or Deleting
+
+export const setCurrentPage = (page) => (dispatch) => {
+  dispatch({ type: SET_CURRENT_PAGE, payload: page })
+}
+
+//Open the Caption and Tags Modal
+
+export const openEditModal = () => (dispatch) => {
+  dispatch({ type: OPEN_EDIT_MODAL })
+}
 //Close the Caption and Tags Modal
 
-export const closeModal = () => (dispatch) => {
-  dispatch({ type: CLOSE_MODAL })
+export const closeEditModal = () => (dispatch) => {
+  dispatch({ type: CLOSE_EDIT_MODAL })
+}
+
+//Update Current Page in Database
+
+export const updatePage = (page) => async (dispatch) => {
+  try {
+    const res = await api.put(`/pages/${page.id}`, page)
+    dispatch({ type: UPDATE_PAGE, payload: res.data })
+    dispatch(setAlert('Page Updated', 'success'))
+  } catch (err) {
+    const errors = err.response.data.errors
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')))
+    }
+  }
+}
+
+//Open the Delete Modal
+
+export const openDeleteModal = () => (dispatch) => {
+  dispatch({ type: OPEN_DELETE_MODAL })
+}
+
+//Close the Delete Modal
+
+export const closeDeleteModal = () => (dispatch) => {
+  dispatch({ type: CLOSE_DELETE_MODAL })
+}
+
+//Delete Page
+export const deletePage = (id) => async (dispatch) => {
+  try {
+    await api.delete(`/pages/${id}`)
+    dispatch({ type: DELETE_PAGE, payload: id })
+    dispatch(setAlert('Page Deleted', 'success'))
+  } catch (err) {
+    const errors = err.response.data.errors
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')))
+    }
+  }
 }
 
 // Load Gallery
 export const loadGallery = () => async (dispatch) => {
   try {
     const res = await api.get('/pages')
+
+    const gallery = res.data
+    let taglist = ['all']
+    gallery.forEach((page) => {
+      page.tags.forEach((tag) => {
+        if (!taglist.includes(tag)) taglist.push(tag)
+      })
+    })
+
+    dispatch({ type: SET_TAG_LIST, payload: taglist })
 
     dispatch({
       type: GALLERY_LOADED,
@@ -70,4 +138,16 @@ export const loadGallery = () => async (dispatch) => {
       type: GALLERY_ERROR
     })
   }
+}
+
+// Filter Pages
+
+export const filterPages = (text) => (dispatch) => {
+  dispatch({ type: FILTER_PAGES, payload: text })
+}
+
+//Clear Filter
+
+export const clearFilter = () => (dispatch) => {
+  dispatch({ type: CLEAR_FILTER })
 }

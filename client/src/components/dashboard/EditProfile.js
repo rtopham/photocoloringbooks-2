@@ -14,7 +14,6 @@ const EditProfile = ({ auth: { user }, updateUser }) => {
 
   const [formData, setFormData] = useState(initialState)
   const [edit, toggleEditState] = useState(false)
-  //  const [showAlert, setShowAlert] = useState(false)
 
   useEffect(() => {
     setFormData({

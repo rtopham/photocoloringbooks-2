@@ -1,16 +1,17 @@
 import React, { useEffect } from 'react'
 import { Spinner } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { loadGallery } from '../../redux/actions/pages'
-import PublicEditImage from '../image/PublicEditImage'
-import PageForm from '../pages/PageForm'
+import { clearFilter, loadGallery } from '../../redux/actions/pages'
+import PageFilter from '../pages/PageFilter'
+import GalleryImages from '../pages/GalleryImages'
 
-const Gallery = ({ auth: { user }, pages: { gallery }, loadGallery }) => {
+const Gallery = ({ pages: { gallery }, loadGallery, clearFilter }) => {
   useEffect(() => {
     if (gallery === null) {
       loadGallery()
     }
-  }, [])
+    clearFilter()
+  }, [gallery, loadGallery, clearFilter])
 
   if (gallery === null)
     return (
@@ -20,16 +21,15 @@ const Gallery = ({ auth: { user }, pages: { gallery }, loadGallery }) => {
         className='d-block mx-auto'
       />
     )
+
   return (
-    <section className='container'>
-      <h1 className='d-inline text-primary'>Gallery</h1>{' '}
-      {/*       <p className='d-inline lead'>
-        <i className='fas fa-user'></i> {user && user.name}
-      </p> */}
-      {gallery.map((page) => {
-        return <img src={`/pages/${page.filename}`} />
-      })}
-    </section>
+    <div className='container'>
+      <div className='mb-4'>
+        <h1 className='d-inline text-primary'>Gallery</h1>{' '}
+      </div>
+      <PageFilter />
+      <GalleryImages bookMode={false} />
+    </div>
   )
 }
 
@@ -38,4 +38,7 @@ const mapStateToProps = (state) => ({
   pages: state.pages
 })
 
-export default connect(mapStateToProps, { loadGallery })(Gallery)
+export default connect(mapStateToProps, {
+  loadGallery,
+  clearFilter
+})(Gallery)

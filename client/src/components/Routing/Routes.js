@@ -8,8 +8,9 @@ import PasswordResetRequest from '../auth/PasswordResetRequest'
 import ResetPassword from '../auth/ResetPassword'
 import Alert from '../layout/Alert'
 import Dashboard from '../dashboard/Dashboard'
-import Pages from '../pages/Pages'
+import CreatePages from '../pages/CreatePages'
 import Gallery from '../pages/Gallery'
+import ColoringBooks from '../books/ColoringBooks'
 
 const Routes = () => {
   return (
@@ -25,8 +26,9 @@ const Routes = () => {
         />
         <Route exact path='/reset-password/:token' component={ResetPassword} />
         <PrivateRoute exact path='/dashboard' component={Dashboard} />
-        <PrivateRoute exact path='/pages' component={Pages} />
+        <PrivateRoute exact path='/pages' component={CreatePages} />
         <PrivateRoute exact path='/gallery' component={Gallery} />
+        <PrivateRoute exact path='/books' component={ColoringBooks} />
         <Route component={NotFound} />
       </Switch>
     </Fragment>

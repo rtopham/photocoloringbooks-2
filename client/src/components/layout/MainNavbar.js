@@ -20,6 +20,16 @@ const MainNavbar = ({ title, auth: { isAuthenticated, user }, logout }) => {
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
+          <Nav.Link as={Link} to='/gallery'>
+            Gallery
+          </Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link as={Link} to='/books'>
+            Coloring Books
+          </Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
           <Nav.Link as={Link} to='/dashboard'>
             Dashboard
           </Nav.Link>

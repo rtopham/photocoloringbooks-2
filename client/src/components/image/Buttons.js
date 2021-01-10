@@ -1,15 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { setSaving } from '../../redux/actions/pages'
 import { Button, ButtonGroup, Col } from 'react-bootstrap'
 
-const Buttons = ({
-  pageObject,
-  onClick,
-  isAuthenticated,
-  upLoad,
-  setSaving
-}) => {
+const Buttons = ({ pageObject, onClick, isAuthenticated, upLoad }) => {
   return (
     <>
       <Col>
@@ -71,6 +64,7 @@ const Buttons = ({
               id='save'
               onClick={onClick}
               active={false}
+              disabled={pageObject.edgeDetector === 'Edge Detector'}
             >
               Save
             </Button>
@@ -105,4 +99,4 @@ const mapStateToProps = (state) => ({
   saving: state.pages.saving
 })
 
-export default connect(mapStateToProps, { setSaving })(Buttons)
+export default connect(mapStateToProps, {})(Buttons)
