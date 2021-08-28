@@ -4,11 +4,13 @@ import { setSaving } from '../../redux/actions/pages'
 import { Card, Button } from 'react-bootstrap'
 import Canvas from './Canvas'
 import Controls from './Controls'
+import PropTypes from 'prop-types'
 
-const PublicEditImage = ({
+const EditImage = ({
   auth: { isAuthenticated, user },
-  pages: { saving },
-  setSaving
+  pages: { gallery },
+  setSaving,
+  setShowLimitModal
 }) => {
   const initialState = {
     image_id: 'public',
@@ -27,7 +29,7 @@ const PublicEditImage = ({
   }
 
   const [pageObject, setPageObject] = useState(initialState)
-  const [imageSource, setImageSource] = useState('/sample.jpg')
+  const [imageSource, setImageSource] = useState('/sample1.jpg')
   const [print, setPrint] = useState(false)
 
   const iframe = useRef(null)
@@ -43,6 +45,10 @@ const PublicEditImage = ({
       setPageObject({ ...initialState, title })
     }
     if (event.target.files[0]) reader.readAsDataURL(event.target.files[0])
+  }
+
+  const handleSave = () => {
+    user.galleryLimit === gallery.length ? setShowLimitModal(true) : setSaving()
   }
 
   const handleButtons = (e) => {
@@ -77,7 +83,7 @@ const PublicEditImage = ({
         setPageObject({ ...pageObject, size: pageObject.size - 10 })
         break
       case 'save':
-        setSaving()
+        handleSave()
         break
       default:
         setPageObject({ ...pageObject, size: 100 })
@@ -87,7 +93,8 @@ const PublicEditImage = ({
   const handleChange = (e) => {
     setPageObject({
       ...pageObject,
-      [e.currentTarget.id]: e.target.value
+      [e.currentTarget.id]: e.target.value,
+      invert: true
     })
   }
 
@@ -110,7 +117,7 @@ const PublicEditImage = ({
     <>
       <Card bg='dark' text='white' className='d-block mt-3'>
         <Card.Header>
-          {pageObject.title || 'sample.jpg by Lady Bugz on Unsplash'}
+          {pageObject.title || 'sample.jpg'}
           <Button
             className='float-right'
             variant='link'
@@ -145,9 +152,16 @@ const PublicEditImage = ({
   )
 }
 
+EditImage.propTypes = {
+  auth: PropTypes.object.isRequired,
+  pages: PropTypes.object.isRequired,
+  setSaving: PropTypes.func.isRequired,
+  setShowLimitModal: PropTypes.func
+}
+
 const mapStateToProps = (state) => ({
   auth: state.auth,
   pages: state.pages
 })
 
-export default connect(mapStateToProps, { setSaving })(PublicEditImage)
+export default connect(mapStateToProps, { setSaving })(EditImage)

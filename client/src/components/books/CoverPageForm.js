@@ -22,12 +22,18 @@ const CoverPageForm = ({
 }) => {
   const [formData, setFormData] = useState(coverPage)
 
-  const { title, textLine1, textLine2, textLine3, footer } = formData
+  const {
+    title,
+    textLine1,
+    textLine2,
+    textLine3,
+    imageNumber,
+    footer
+  } = formData
 
   const onChange = (e) => {
     let value = e.target.value
     if (e.target.name === 'imageNumber') value = parseInt(e.target.value)
-
     setFormData({ ...formData, [e.target.name]: value })
   }
 
@@ -58,7 +64,12 @@ const CoverPageForm = ({
           <Form onSubmit={onSubmit}>
             <FormGroup controlId='title'>
               <FormLabel>Title</FormLabel>
-              <FormControl name='title' value={title} onChange={onChange} />
+              <FormControl
+                name='title'
+                value={title}
+                onChange={onChange}
+                maxLength='26'
+              />
             </FormGroup>
             <FormGroup controlId='textLine1'>
               <FormLabel>Text line 1</FormLabel>
@@ -66,6 +77,7 @@ const CoverPageForm = ({
                 name='textLine1'
                 value={textLine1}
                 onChange={onChange}
+                maxLength='60'
               />
             </FormGroup>
             <FormGroup controlId='textLine2'>
@@ -74,6 +86,7 @@ const CoverPageForm = ({
                 name='textLine2'
                 value={textLine2}
                 onChange={onChange}
+                maxLength='60'
               />
             </FormGroup>
             <FormGroup controlId='textLine3'>
@@ -82,11 +95,17 @@ const CoverPageForm = ({
                 name='textLine3'
                 value={textLine3}
                 onChange={onChange}
+                maxLength='60'
               />
             </FormGroup>
             <FormGroup controlId='footer'>
               <FormLabel>Footer</FormLabel>
-              <FormControl name='footer' value={footer} onChange={onChange} />
+              <FormControl
+                name='footer'
+                value={footer}
+                onChange={onChange}
+                maxLength='60'
+              />
             </FormGroup>
             <FormGroup as={Col}>
               <Form.Control
@@ -127,7 +146,7 @@ const CoverPageForm = ({
               {formData.coverPageType === 'single-image' && (
                 <Form.Control
                   name='imageNumber'
-                  value={formData.imageNumber}
+                  value={imageNumber}
                   className='d-inline'
                   style={{ maxWidth: 80 }}
                   as='select'
@@ -143,7 +162,7 @@ const CoverPageForm = ({
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={onSubmit}>Save</Button>
+          <Button onClick={onSubmit}>Apply</Button>
           <Button onClick={clickCancel}>Cancel</Button>
         </Modal.Footer>
       </Modal>
@@ -153,12 +172,13 @@ const CoverPageForm = ({
 
 CoverPageForm.propTypes = {
   show: PropTypes.bool.isRequired,
-  handleCancel: PropTypes.func.isRequired
+  books: PropTypes.object.isRequired,
+  handleCancel: PropTypes.func.isRequired,
+  handleSave: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
-  books: state.books,
-  pages: state.pages
+  books: state.books
 })
 
 export default connect(mapStateToProps, {})(CoverPageForm)

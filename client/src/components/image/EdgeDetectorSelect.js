@@ -1,5 +1,6 @@
 import React from 'react'
 import { FormGroup, FormLabel, FormControl } from 'react-bootstrap'
+import PropTypes from 'prop-types'
 
 const EdgeDetectorSelect = ({ pageObject, onChange }) => {
   const selectvals = [
@@ -30,6 +31,11 @@ const EdgeDetectorSelect = ({ pageObject, onChange }) => {
       </FormControl>
     </FormGroup>
   )
+}
+
+EdgeDetectorSelect.propTypes = {
+  pageObject: PropTypes.object.isRequired,
+  onChange: PropTypes.func.isRequired
 }
 
 export default EdgeDetectorSelect

@@ -1,11 +1,14 @@
 //React and Components
-import React, { Fragment, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import MainNavbar from './components/layout/MainNavbar'
-import Landing from './components/layout/Landing'
 import Routes from './components/Routing/Routes'
 
+// Stripe.js Components
+import { Elements } from '@stripe/react-stripe-js'
+import { loadStripe } from '@stripe/stripe-js'
+
 //React Router Components
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 //Redux
 import { Provider } from 'react-redux'
@@ -18,14 +21,18 @@ import setAuthToken from './utils/setAuthToken'
 
 import './App.css'
 
+const stripePromise = loadStripe('pk_test_0vcUzhimBNZs7qlLw3W6pAdI')
+
 const App = () => {
   useEffect(() => {
     //check for token in local storage
     if (localStorage.token) {
       setAuthToken(localStorage.token)
     }
-    if (localStorage.token) store.dispatch(loadUser())
-    else store.dispatch(setLoading(false))
+    if (localStorage.token) {
+      store.dispatch(setLoading(true))
+      store.dispatch(loadUser())
+    } else store.dispatch(setLoading(false))
 
     // log user out from all tabs if they log out in one tab
     window.addEventListener('storage', () => {
@@ -34,17 +41,14 @@ const App = () => {
   }, [])
 
   return (
-    <Provider store={store}>
-      <Router>
-        <Fragment>
+    <Elements stripe={stripePromise}>
+      <Provider store={store}>
+        <Router>
           <MainNavbar />
-          <Switch>
-            <Route exact path='/' component={Landing} />
-            <Route component={Routes} />
-          </Switch>
-        </Fragment>
-      </Router>
-    </Provider>
+          <Route component={Routes} />
+        </Router>
+      </Provider>
+    </Elements>
   )
 }
 

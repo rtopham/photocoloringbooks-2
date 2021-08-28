@@ -1,44 +1,72 @@
 import React, { useEffect } from 'react'
-import { Spinner } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { clearFilter, loadGallery } from '../../redux/actions/pages'
+import { clearFilter } from '../../redux/actions/pages'
 import PageFilter from '../pages/PageFilter'
 import GalleryImages from '../pages/GalleryImages'
+import GalleryUpgradeNotice from '../pages/GalleryUpgradeNotice'
+import GalleryFullNotice from '../pages/GalleryFullNotice'
+import GoogleAd from '../layout/GoogleAd'
+import PropTypes from 'prop-types'
 
-const Gallery = ({ pages: { gallery }, loadGallery, clearFilter }) => {
+const Gallery = ({
+  pages: { gallery },
+  auth: { user },
+  stripe: { subscription },
+  clearFilter
+}) => {
   useEffect(() => {
-    if (gallery === null) {
-      loadGallery()
-    }
     clearFilter()
-  }, [gallery, loadGallery, clearFilter])
+  }, [clearFilter])
 
-  if (gallery === null)
+  if (gallery && gallery.length === 0)
     return (
-      <Spinner
-        animation='border'
-        variant='primary'
-        className='d-block mx-auto'
-      />
+      <div className='container'>
+        <GoogleAd />
+        <div className='mb-4'>
+          <h1 className='d-inline text-primary'>Gallery</h1>{' '}
+        </div>
+        <h5>No pages found.</h5>
+        <p>
+          You do not have any pages saved.
+          <br />
+          To create a new coloring book page go to:{' '}
+          <Link to='/pages'>Pages</Link>.
+        </p>
+      </div>
     )
 
   return (
     <div className='container'>
+      <GoogleAd />
       <div className='mb-4'>
         <h1 className='d-inline text-primary'>Gallery</h1>{' '}
       </div>
       <PageFilter />
       <GalleryImages bookMode={false} />
+      {!subscription && gallery.length >= user.galleryLimit && (
+        <GalleryUpgradeNotice />
+      )}
+      {subscription &&
+        subscription.status === 'active' &&
+        gallery.length >= user.galleryLimit && <GalleryFullNotice />}
     </div>
   )
 }
 
+Gallery.propTypes = {
+  auth: PropTypes.object.isRequired,
+  pages: PropTypes.object.isRequired,
+  stripe: PropTypes.object.isRequired,
+  clearFilter: PropTypes.func.isRequired
+}
+
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  pages: state.pages
+  pages: state.pages,
+  stripe: state.stripe
 })
 
 export default connect(mapStateToProps, {
-  loadGallery,
   clearFilter
 })(Gallery)

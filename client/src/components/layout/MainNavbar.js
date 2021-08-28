@@ -16,7 +16,7 @@ const MainNavbar = ({ title, auth: { isAuthenticated, user }, logout }) => {
       <Nav>
         <Nav.Item>
           <Nav.Link as={Link} to='/pages'>
-            Pages
+            Create
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
@@ -26,7 +26,7 @@ const MainNavbar = ({ title, auth: { isAuthenticated, user }, logout }) => {
         </Nav.Item>
         <Nav.Item>
           <Nav.Link as={Link} to='/books'>
-            Coloring Books
+            Books
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
@@ -63,8 +63,8 @@ const MainNavbar = ({ title, auth: { isAuthenticated, user }, logout }) => {
 
   return (
     <div>
-      <Navbar expand='sm' variant='dark' bg='dark' fixed='top'>
-        <Container className='menuContainer'>
+      <Navbar expand='lg' variant='dark' bg='dark' fixed='top'>
+        <Container>
           <Navbar.Brand as={Link} to='/'>
             <Image className='brandImage' src='/favicon.ico' /> {title}
           </Navbar.Brand>

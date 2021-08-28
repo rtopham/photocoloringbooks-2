@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { connect } from 'react-redux'
 import { filterPages, clearFilter } from '../../redux/actions/pages'
+import PropTypes from 'prop-types'
 
 const PageFilter = ({ pages: { filtered }, filterPages, clearFilter }) => {
   const text = useRef('')
@@ -14,7 +15,6 @@ const PageFilter = ({ pages: { filtered }, filterPages, clearFilter }) => {
   const onChange = (e) => {
     if (text.current.value !== '') {
       filterPages(e.target.value)
-      console.log(filtered)
     } else {
       clearFilter()
     }
@@ -30,6 +30,12 @@ const PageFilter = ({ pages: { filtered }, filterPages, clearFilter }) => {
       />
     </form>
   )
+}
+
+PageFilter.propTypes = {
+  pages: PropTypes.object.isRequired,
+  filterPages: PropTypes.func.isRequired,
+  clearFilter: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({

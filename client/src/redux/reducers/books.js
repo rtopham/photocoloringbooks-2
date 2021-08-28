@@ -6,23 +6,28 @@ import {
   SET_PAGE_INDEX,
   UPDATE_CURRENT_PAGE,
   SET_CURRENT_BOOK,
-  OPEN_EDIT_MODAL,
-  CLOSE_EDIT_MODAL,
-  OPEN_DELETE_MODAL,
-  CLOSE_DELETE_MODAL,
-  DELETE_BOOK
+  CLEAR_CURRENT_BOOK,
+  OPEN_BOOK_EDIT_MODAL,
+  CLOSE_BOOK_EDIT_MODAL,
+  OPEN_BOOK_DELETE_MODAL,
+  CLOSE_BOOK_DELETE_MODAL,
+  DELETE_BOOK,
+  CLEAR_BOOKS,
+  DELETE_ALL_BOOKS
 } from '../actions/types'
 
 const initialState = {
+  booksLoading: true,
   books: null,
   error: '',
+  editMode: false,
   editModalShow: false,
   deleteModalShow: false,
   current: {
     pageList: [],
     pages: [],
     pageNumbers: false,
-    pageIndex: 0,
+    pageIndex: -1,
     captions: false,
     changesMade: false,
     coverPage: {
@@ -30,7 +35,7 @@ const initialState = {
       textLine1: '',
       textLine2: '',
       textLine3: '',
-      coverPage: false,
+      coverPage: true,
       coverPageType: 'no-image',
       imageNumber: 1,
       footer: 'www.photocoloringbooks.com'
@@ -46,7 +51,13 @@ export default function (state = initialState, action) {
     case BOOKS_LOADED:
       return {
         ...state,
-        books: payload
+        books: payload,
+        current: {
+          ...initialState.current,
+          pageList: [],
+          coverPage: { ...initialState.current.coverPage }
+        },
+        booksLoading: false
       }
     case BOOKS_ERROR:
       return {
@@ -89,38 +100,72 @@ export default function (state = initialState, action) {
         current: {
           ...state.current,
           ...payload,
-          coverPage: { ...state.current.coverPage, ...payload.coverPage }
-        }
+          coverPage: { ...state.current.coverPage, ...payload.coverPage },
+          changesMade: true
+        },
+        editMode: true
+      }
+
+    case CLEAR_CURRENT_BOOK:
+      return {
+        ...state,
+        current: {
+          ...initialState.current,
+          pageList: [],
+          coverPage: { ...initialState.current.coverPage }
+        },
+        editMode: false
       }
 
     case DELETE_BOOK:
       return {
         ...state,
         books: state.books.filter((book) => book._id !== payload),
+        current: {
+          ...initialState.current,
+          pageList: [],
+          coverPage: { ...initialState.current.coverPage }
+        },
         deleteModalShow: false
       }
 
-    case CLOSE_EDIT_MODAL:
+    case DELETE_ALL_BOOKS:
+      return {
+        ...state,
+        books: [],
+        current: {
+          ...initialState.current,
+          pageList: [],
+          coverPage: { ...initialState.current.coverPage }
+        }
+      }
+
+    case CLOSE_BOOK_EDIT_MODAL:
       return {
         ...state,
         saving: false,
         editModalShow: false
       }
-    case OPEN_EDIT_MODAL:
+    case OPEN_BOOK_EDIT_MODAL:
       return {
         ...state,
         editModalShow: true
       }
 
-    case CLOSE_DELETE_MODAL:
+    case CLOSE_BOOK_DELETE_MODAL:
       return {
         ...state,
         deleteModalShow: false
       }
-    case OPEN_DELETE_MODAL:
+    case OPEN_BOOK_DELETE_MODAL:
       return {
         ...state,
         deleteModalShow: true
+      }
+
+    case CLEAR_BOOKS:
+      return {
+        ...initialState
       }
 
     default:

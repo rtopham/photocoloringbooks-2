@@ -3,13 +3,14 @@ import { Container, Row, Col } from 'react-bootstrap'
 import Slider from './Slider'
 import Buttons from './Buttons'
 import EdgeDetectorSelect from './EdgeDetectorSelect'
+import PropTypes from 'prop-types'
 
 const Controls = ({
   isAuthenticated,
   onClick,
   onChange,
   upLoad,
-  clickSave,
+
   pageObject
 }) => {
   return (
@@ -20,7 +21,6 @@ const Controls = ({
           onClick={onClick}
           isAuthenticated={isAuthenticated}
           upLoad={upLoad}
-          clickSave={clickSave}
         />
       </Row>
       <Row>
@@ -52,6 +52,14 @@ const Controls = ({
       </Row>
     </Container>
   )
+}
+
+Controls.propTypes = {
+  pageObject: PropTypes.object.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+  onClick: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+  upload: PropTypes.string
 }
 
 export default Controls

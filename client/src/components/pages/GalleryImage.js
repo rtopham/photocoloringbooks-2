@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { Card, Image, Button } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 import {
   openDeleteModal,
   openEditModal,
@@ -8,6 +9,7 @@ import {
 } from '../../redux/actions/pages'
 
 import { updatePageList } from '../../redux/actions/books'
+import PropTypes from 'prop-types'
 
 const GalleryImage = ({
   page,
@@ -20,20 +22,20 @@ const GalleryImage = ({
   selected
 }) => {
   const [styleObject, setStyleObject] = useState({
-    maxWidth: '200px',
+    maxWidth: '196px',
     maxHeight: '133px'
   })
 
   useEffect(() => {
     if (selected)
       setStyleObject({
-        maxWidth: '200px',
+        maxWidth: '196px',
         maxHeight: '133px',
         border: 'solid #007bff'
       })
     else
       setStyleObject({
-        maxWidth: '200px',
+        maxWidth: '196px',
         maxHeight: '133px'
       })
   }, [selected])
@@ -51,57 +53,86 @@ const GalleryImage = ({
   const clickImage = () => {
     if (bookMode) {
       let imageSelected = pageList.includes(page)
-
       let newPageList = pageList
       if (!imageSelected) {
         newPageList.push(page)
         setStyleObject({
-          maxWidth: '200px',
+          maxWidth: '196px',
           maxHeight: '133px',
           border: 'solid #007bff'
         })
       } else {
-        //newPageList = newPageList.splice(page, 1)
         newPageList = pageList.filter((element) => element._id !== page._id)
         setStyleObject({
-          maxWidth: '200px',
+          maxWidth: '196px',
           maxHeight: '133px'
         })
       }
+
       updatePageList(newPageList)
     }
   }
 
   return (
     <>
-      <Card style={{ maxHeight: '135px' }}>
-        <Image
-          thumbnail
-          src={`/pages/${page.filename}`}
-          className={'mr-3 mb-3'}
-          style={styleObject}
-          onClick={clickImage}
-        />
+      <Card style={{ maxHeight: '135px', minHeight: '135px' }}>
+        {!bookMode ? (
+          <Link to={`/pages/${page._id}`}>
+            <Image
+              thumbnail
+              src={`${process.env.REACT_APP_IMAGE_URL}${page.filename}`}
+              className={'mr-3 mb-3'}
+              style={styleObject}
+              onClick={clickImage}
+            />
+          </Link>
+        ) : (
+          <Image
+            thumbnail
+            src={`${process.env.REACT_APP_IMAGE_URL}${page.filename}`}
+            className={'mr-3 mb-3'}
+            style={styleObject}
+            onClick={clickImage}
+          />
+        )}
 
-        <div className='float-right mr-2'>
-          <h6>{page.caption}</h6>
+        <div className='galleryText'>
+          <h6 style={{ maxWidth: '70px' }}>{page.caption.substring(0, 18)}</h6>
           <h6>{page.date.substring(0, 10)}</h6>
-
-          <br />
-          <br />
-          <span className='float-right'>
-            {' '}
-            <Button variant='link' size='sm' onClick={clickEdit}>
-              <i className='fa fa-edit'></i>
-            </Button>
-            <Button variant='link' size='sm' onClick={clickDelete}>
-              <i className='fa fa-trash'></i>
-            </Button>
-          </span>
         </div>
+        <span>
+          {' '}
+          <Button
+            variant='link'
+            size='sm'
+            onClick={clickEdit}
+            className='editIcon'
+          >
+            <i className='fa fa-edit'></i>
+          </Button>
+          <Button
+            variant='link'
+            size='sm'
+            onClick={clickDelete}
+            className='deleteIcon'
+          >
+            <i className='fa fa-trash'></i>
+          </Button>
+        </span>
       </Card>
     </>
   )
+}
+
+GalleryImage.propTypes = {
+  page: PropTypes.object.isRequired,
+  bookMode: PropTypes.bool.isRequired,
+  setCurrentPage: PropTypes.func.isRequired,
+  openEditModal: PropTypes.func.isRequired,
+  openDeleteModal: PropTypes.func.isRequired,
+  updatePageList: PropTypes.func.isRequired,
+  pageList: PropTypes.array.isRequired,
+  selected: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = (state) => ({

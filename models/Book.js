@@ -30,6 +30,9 @@ const BookSchema = new mongoose.Schema({
     coverPageType: {
       type: String
     },
+    imageNumber: {
+      type: Number
+    },
     footer: {
       type: String
     }
@@ -72,7 +75,9 @@ const BookSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  postedBy: { type: mongoose.Schema.ObjectId, ref: 'User' }
+  postedBy: { type: mongoose.Schema.ObjectId, ref: 'User' },
+  captions: { type: Boolean, default: false },
+  pageNumbers: { type: Boolean, default: false }
 })
 
 module.exports = mongoose.model('Book', BookSchema)

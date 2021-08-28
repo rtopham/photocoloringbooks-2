@@ -1,6 +1,13 @@
 import api from '../../utils/api'
 import { setAlert } from './alert'
 import {
+  loadStripeCustomerData,
+  loadStripeSubscriptionData,
+  clearStripeData
+} from './stripe'
+import { loadBooks, clearBooks, deleteBooks } from './books'
+import { loadGallery, clearPages, deletePages } from './pages'
+import {
   SET_LOADING,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
@@ -16,7 +23,9 @@ import {
   RESET_USER_PASSWORD,
   RESET_USER_PASSWORD_FAIL,
   REQUEST_PASSWORD_RESET_SUCCESS,
-  REQUEST_PASSWORD_RESET_FAIL
+  REQUEST_PASSWORD_RESET_FAIL,
+  OPEN_ACCOUNT_DELETE_MODAL,
+  CLOSE_ACCOUNT_DELETE_MODAL
 } from './types'
 
 // Set Loading
@@ -30,11 +39,20 @@ export const loadUser = () => async (dispatch) => {
   try {
     const res = await api.get('/auth')
 
+    if (res.data.stripeCustomerId)
+      dispatch(loadStripeCustomerData(res.data.stripeCustomerId))
+    if (res.data.stripeSubscriptionId)
+      dispatch(loadStripeSubscriptionData(res.data.stripeSubscriptionId))
+
+    dispatch(loadGallery())
+    dispatch(loadBooks())
+
     dispatch({
       type: USER_LOADED,
       payload: res.data
     })
   } catch (err) {
+    console.log(err)
     dispatch({
       type: AUTH_ERROR
     })
@@ -78,6 +96,7 @@ export const login = (email, password) => async (dispatch) => {
 
     dispatch(loadUser())
   } catch (err) {
+    console.error(err)
     const errors = err.response.data.errors
 
     if (errors) {
@@ -90,9 +109,16 @@ export const login = (email, password) => async (dispatch) => {
   }
 }
 
-// Logout
-export const logout = () => ({ type: LOGOUT })
+// Old Logout
+//export const logout = () => ({ type: LOGOUT })
 
+// Logout
+export const logout = () => (dispatch) => {
+  dispatch({ type: LOGOUT })
+  dispatch(clearStripeData())
+  dispatch(clearBooks())
+  dispatch(clearPages())
+}
 // Update User
 
 export const updateUser = (formData) => async (dispatch) => {
@@ -112,6 +138,43 @@ export const updateUser = (formData) => async (dispatch) => {
 
     dispatch({ type: UPDATE_USER_FAIL })
   }
+}
+
+//Delete User
+
+export const deleteAccount = () => async (dispatch) => {
+  try {
+    //Delete User's Books
+
+    dispatch(deleteBooks())
+
+    //Delete User's Pages
+
+    dispatch(deletePages())
+
+    //Delete User
+
+    await api.delete('/users')
+
+    //Logout
+    dispatch(logout())
+    dispatch(closeDeleteAccountModal())
+    dispatch(setAlert('Account Deleted', 'success'))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+//Open Delete Account Modal
+
+export const openDeleteAccountModal = () => (dispatch) => {
+  dispatch({ type: OPEN_ACCOUNT_DELETE_MODAL })
+}
+
+//Close Delete Account Modal
+
+export const closeDeleteAccountModal = () => (dispatch) => {
+  dispatch({ type: CLOSE_ACCOUNT_DELETE_MODAL })
 }
 
 //Request Password Reset Email

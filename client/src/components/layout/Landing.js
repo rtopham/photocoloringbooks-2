@@ -2,9 +2,10 @@ import React from 'react'
 import { Container } from 'react-bootstrap'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-import FakeGoogleAd from './GoogleAd'
-import PublicEditImage from '../image/PublicEditImage'
+import GoogleAd from './GoogleAd'
+import EditImage from '../image/EditImage'
 import PropTypes from 'prop-types'
+import Instructions from './Instructions'
 
 const Landing = ({ isAuthenticated }) => {
   if (isAuthenticated) {
@@ -13,8 +14,9 @@ const Landing = ({ isAuthenticated }) => {
 
   return (
     <Container>
-      <FakeGoogleAd />
-      <PublicEditImage />
+      <GoogleAd />
+      <EditImage />
+      <Instructions />
     </Container>
   )
 }

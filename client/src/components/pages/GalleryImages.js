@@ -1,22 +1,31 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { CardColumns, Badge, Button } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { filterPages, clearFilter } from '../../redux/actions/pages'
+import { updatePageList } from '../../redux/actions/books'
 import GalleryImage from './GalleryImage'
 import UpdatePageForm from '../pages/UpdatePageForm'
 import DeletePageModal from '../pages/DeletePageModal'
+import PropTypes from 'prop-types'
 
 const GalleryImages = ({
   pages: { gallery, filtered, taglist },
   pageList,
   bookMode,
   filterPages,
-  clearFilter
+  clearFilter,
+  updatePageList
 }) => {
+  useEffect(() => {
+    if (!bookMode && pageList.length > 0) {
+      updatePageList([])
+    }
+  }, [pageList, bookMode, updatePageList])
   const clickTag = (e) => {
     if (e.currentTarget.id === 'all') clearFilter()
     else filterPages(e.currentTarget.id)
   }
+
   return (
     <>
       <div className='d-inline'>
@@ -66,6 +75,15 @@ const GalleryImages = ({
   )
 }
 
+GalleryImages.propTypes = {
+  pages: PropTypes.object.isRequired,
+  pageList: PropTypes.array.isRequired,
+  bookMode: PropTypes.bool.isRequired,
+  filterPages: PropTypes.func.isRequired,
+  clearFilter: PropTypes.func.isRequired,
+  updatePageList: PropTypes.func.isRequired
+}
+
 const mapStateToProps = (state) => ({
   auth: state.auth,
   pages: state.pages,
@@ -74,5 +92,6 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   filterPages,
-  clearFilter
+  clearFilter,
+  updatePageList
 })(GalleryImages)

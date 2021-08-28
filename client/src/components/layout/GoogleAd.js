@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react'
+import { Image } from 'react-bootstrap'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
-const GoogleAd = () => {
+const GoogleAd = ({ stripe: { subscription } }) => {
   useEffect(() => {
-    ;(window.adsbygoogle = window.adsbygoogle || []).push({})
+    //    ;(window.adsbygoogle = window.adsbygoogle || []).push({})
   }, [])
 
-  return (
+  /*   return (
     <div className='ad'>
       <ins
         className='adsbygoogle'
@@ -16,7 +19,28 @@ const GoogleAd = () => {
         data-full-width-responsive='true'
       ></ins>
     </div>
-  )
+  ) 
+ */
+
+  if (!subscription || (subscription && subscription.status !== 'active'))
+    return (
+      <div className=' mb-4'>
+        <Image
+          fluid
+          src='https://storage.googleapis.com/support-kms-prod/SNP_59D432450939ECC60A21BEDBEE985B1817B1_3094744_en_v2'
+        />
+      </div>
+    )
+
+  return null
 }
 
-export default GoogleAd
+GoogleAd.propTypes = {
+  stripe: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => ({
+  stripe: state.stripe
+})
+
+export default connect(mapStateToProps)(GoogleAd)

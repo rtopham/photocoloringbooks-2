@@ -1,20 +1,24 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import PublicEditImage from '../image/PublicEditImage'
+import React, { useState } from 'react'
+import EditImage from '../image/EditImage'
 import CreatePageForm from './CreatePageForm'
+import GalleryLimitModal from './GalleryLimitModal'
+import GoogleAd from '../layout/GoogleAd'
 
-const Create = ({ auth: { user } }) => {
+const Create = () => {
+  const [showLimitModal, setShowLimitModal] = useState(false)
+
   return (
-    <section className='container'>
+    <div className='container'>
+      <GoogleAd />
       <h1 className='d-inline text-primary'>Create Pages</h1>{' '}
-      <PublicEditImage />
+      <EditImage setShowLimitModal={setShowLimitModal} />
       <CreatePageForm />
-    </section>
+      <GalleryLimitModal
+        show={showLimitModal}
+        setShowLimitModal={setShowLimitModal}
+      />
+    </div>
   )
 }
 
-const mapStateToProps = (state) => ({
-  auth: state.auth
-})
-
-export default connect(mapStateToProps, {})(Create)
+export default Create

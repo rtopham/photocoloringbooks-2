@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { setPageBlob } from '../../redux/actions/pages'
 import * as pcbImage from '../../lib/pcb-image-processing'
 import * as pcbEdge from '../../lib/pcb-edge-detection'
+import PropTypes from 'prop-types'
 
 const Canvas = ({
   pages: { saving },
@@ -18,7 +19,7 @@ const Canvas = ({
 
   const mainCanvas = useRef(null)
 
-  const widthVariable = 1110
+  const widthVariable = 978
 
   useEffect(() => {
     let img = new Image()
@@ -163,6 +164,15 @@ const Canvas = ({
       />
     </div>
   )
+}
+
+Canvas.propTypes = {
+  pages: PropTypes.object.isRequired,
+  imageSource: PropTypes.string.isRequired,
+  pageObject: PropTypes.object.isRequired,
+  print: PropTypes.bool.isRequired,
+  printPage: PropTypes.func.isRequired,
+  setPageBlob: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({

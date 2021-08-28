@@ -10,12 +10,13 @@ import {
   FormControl
 } from 'react-bootstrap'
 import { closeEditModal, savePage } from '../../redux/actions/pages'
+import PropTypes from 'prop-types'
 
 const uploadFormData = new FormData()
 
 const CreatePageForm = ({
   pages: { editModalShow, srcBlob },
-  closeModal,
+  closeEditModal,
   savePage
 }) => {
   const initialState = {
@@ -43,9 +44,9 @@ const CreatePageForm = ({
   }
 
   const clickCancel = (e) => {
-    e.preventDefault()
+    // e.preventDefault()
     setFormData(initialState)
-    closeModal()
+    closeEditModal()
   }
 
   const clickDeleteTag = (e) => {
@@ -62,6 +63,7 @@ const CreatePageForm = ({
     uploadFormData.set('tags', JSON.stringify(formData.tagArray))
     uploadFormData.set('page', srcBlob)
     savePage(uploadFormData)
+    setFormData(initialState)
 
     //savePage(page)
   }
@@ -70,6 +72,7 @@ const CreatePageForm = ({
   return (
     <Modal
       show={editModalShow}
+      onHide={clickCancel}
       size='lg'
       aria-labelledby='contained-modal-title-vcenter'
       centered
@@ -123,6 +126,12 @@ const CreatePageForm = ({
       </Modal.Footer>
     </Modal>
   )
+}
+
+CreatePageForm.propTypes = {
+  pages: PropTypes.object.isRequired,
+  closeEditModal: PropTypes.func.isRequired,
+  savePage: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({

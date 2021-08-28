@@ -44,10 +44,10 @@ const Login = ({ login, isAuthenticated }) => {
 
   return (
     <Container fluid className='authForms'>
-      <Card>
+      <Card border='dark' text='dark'>
         <Card.Header>
           <h1>
-            <span className='text-primary'>
+            <span>
               <i className='fas fa-user' /> Sign In
             </span>
           </h1>
@@ -85,7 +85,7 @@ const Login = ({ login, isAuthenticated }) => {
               type='submit'
               value='Login'
               disabled={!validateForm()}
-              className='btn btn-primary btn-block'
+              className='btn btn-dark btn-block'
             />
           </Form>
           <p></p>

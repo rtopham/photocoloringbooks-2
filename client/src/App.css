@@ -2,10 +2,16 @@
   .authForms {
     max-width: 40%;
   }
+
+  body {
+    padding-top: 80px;
+  }
 }
 
-body {
-  padding-top: 80px;
+@media screen and (max-width: 768px) {
+  body {
+    padding-top: 220px;
+  }
 }
 
 .brandImage {
@@ -19,10 +25,43 @@ body {
 
 .ad {
   border: solid blue;
-  height: 280px;
 }
 
 .imageCanvas {
   margin: auto;
-  max-width: 930px;
+  max-width: 970px;
 }
+
+div.container {
+  max-width: 1010px;
+}
+
+.galleryImageThumb {
+  max-width: 200;
+}
+
+.galleryImageBox {
+  position: relative;
+}
+
+.editIcon {
+  position: absolute;
+  bottom: 0px;
+  right: 25px;
+}
+.deleteIcon {
+  position: absolute;
+  bottom: 0px;
+  right: 2px;
+}
+
+.galleryText {
+  position: absolute;
+  top: 0px;
+  left: 210px;
+}
+
+/* section.container {
+  max-width: 973px;
+  border: solid blue;
+} */

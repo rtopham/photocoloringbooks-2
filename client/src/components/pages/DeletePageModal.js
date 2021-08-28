@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Modal, Button, Image } from 'react-bootstrap'
 import { deletePage, closeDeleteModal } from '../../redux/actions/pages'
+import PropTypes from 'prop-types'
 
 const DeletePageModal = ({
   pages: { current, deleteModalShow },
@@ -21,7 +22,7 @@ const DeletePageModal = ({
       <Modal.Body>
         <Image
           thumbnail
-          src={`/pages/${current.filename}`}
+          src={`/api/pages/url/${current.filename}`}
           className='mr-3 mb-3'
           style={{ maxWidth: '200px', maxHeight: '133px' }}
         />
@@ -37,6 +38,12 @@ const DeletePageModal = ({
       </Modal.Footer>
     </Modal>
   )
+}
+
+DeletePageModal.propTypes = {
+  pages: PropTypes.object.isRequired,
+  deletePage: PropTypes.func.isRequired,
+  closeDeleteModal: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({

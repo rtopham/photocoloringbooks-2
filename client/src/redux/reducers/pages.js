@@ -3,10 +3,10 @@ import {
   SET_PAGE_URL,
   SET_PAGE_BLOB,
   SAVE_PAGE,
-  CLOSE_EDIT_MODAL,
-  OPEN_EDIT_MODAL,
-  CLOSE_DELETE_MODAL,
-  OPEN_DELETE_MODAL,
+  CLOSE_PAGE_EDIT_MODAL,
+  OPEN_PAGE_EDIT_MODAL,
+  CLOSE_PAGE_DELETE_MODAL,
+  OPEN_PAGE_DELETE_MODAL,
   GALLERY_LOADED,
   GALLERY_ERROR,
   SET_CURRENT_PAGE,
@@ -14,10 +14,13 @@ import {
   DELETE_PAGE,
   FILTER_PAGES,
   CLEAR_FILTER,
-  SET_TAG_LIST
+  SET_TAG_LIST,
+  CLEAR_PAGES,
+  DELETE_ALL_PAGES
 } from '../actions/types'
 
 const initialState = {
+  galleryLoading: true,
   saving: false,
   editModalShow: false,
   deleteModalShow: false,
@@ -78,28 +81,34 @@ export default function (state = initialState, action) {
         gallery: state.gallery.filter((page) => page._id !== action.payload),
         deleteModalShow: false
       }
+
+    case DELETE_ALL_PAGES:
+      return {
+        ...state,
+        gallery: []
+      }
     case SET_CURRENT_PAGE:
       return {
         ...state,
         current: payload
       }
-    case CLOSE_EDIT_MODAL:
+    case CLOSE_PAGE_EDIT_MODAL:
       return {
         ...state,
         saving: false,
         editModalShow: false
       }
-    case OPEN_EDIT_MODAL:
+    case OPEN_PAGE_EDIT_MODAL:
       return {
         ...state,
         editModalShow: true
       }
-    case CLOSE_DELETE_MODAL:
+    case CLOSE_PAGE_DELETE_MODAL:
       return {
         ...state,
         deleteModalShow: false
       }
-    case OPEN_DELETE_MODAL:
+    case OPEN_PAGE_DELETE_MODAL:
       return {
         ...state,
         deleteModalShow: true
@@ -107,7 +116,8 @@ export default function (state = initialState, action) {
     case GALLERY_LOADED:
       return {
         ...state,
-        gallery: payload
+        gallery: payload,
+        galleryLoading: false
       }
     case GALLERY_ERROR:
       return {
@@ -131,6 +141,10 @@ export default function (state = initialState, action) {
       return {
         ...state,
         filtered: null
+      }
+    case CLEAR_PAGES:
+      return {
+        ...initialState
       }
     default:
       return state

@@ -1,5 +1,6 @@
 import React from 'react'
 import { FormGroup, FormLabel, FormControl } from 'react-bootstrap'
+import PropTypes from 'prop-types'
 
 const Slider = ({
   id,
@@ -29,6 +30,16 @@ const Slider = ({
       </FormGroup>
     </>
   )
+}
+
+Slider.propTypes = {
+  id: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  minVal: PropTypes.string.isRequired,
+  maxVal: PropTypes.string.isRequired,
+  stepVal: PropTypes.string.isRequired,
+  pageObject: PropTypes.object.isRequired,
+  onChange: PropTypes.func.isRequired
 }
 
 export default Slider

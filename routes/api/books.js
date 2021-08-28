@@ -7,22 +7,28 @@ const fs = require('fs')
 
 const Page = require('../../models/Page')
 const Book = require('../../models/Book')
+const mongoose = require('mongoose')
 
 //@route    POST api/books
 //@desc     Create Book
 //@access   Private
 
 router.post('/', auth, async (req, res) => {
-  //  console.log('Here we Save in the Databaise')
-  //console.log(req.body)
   try {
-    const newBook = new Book({
+    let newBook = {
       ...req.body,
       postedBy: req.user.id
-    })
-    const book = await newBook.save()
+    }
 
-    res.json(book)
+    if (!newBook._id) newBook._id = new mongoose.mongo.ObjectId()
+
+    const book = await Book.findOneAndUpdate(
+      { _id: newBook._id },
+      { $set: newBook },
+      { new: true, upsert: true, setDefaultsOnInsert: true }
+    )
+
+    res.json(newBook)
   } catch (err) {
     console.error(err.message)
     res.status(500).send('Server Error.')
@@ -66,6 +72,25 @@ router.put(
     }
   }
 )
+
+// @route   DELETE api/books/by-user
+// @desc    Delete all books of user
+// @access  Private
+
+router.delete('/by-user', auth, async (req, res) => {
+  try {
+    const books = await Book.find({ postedBy: req.user.id })
+    if (books.length === 0)
+      return res.status(404).json({ msg: 'No Books found' })
+
+    await Book.deleteMany({ postedBy: req.user.id })
+
+    res.json(books)
+  } catch (err) {
+    console.error(err.message)
+    res.status(500).send('Server Error')
+  }
+})
 
 // @route   DELETE api/books/:id
 // @desc    Delete book

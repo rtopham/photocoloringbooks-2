@@ -9,15 +9,18 @@ import {
   PASSWORD_RESET_TOKEN_INVALID,
   PASSWORD_RESET_TOKEN_VALID,
   RESET_USER_PASSWORD,
-  UPDATE_USER_SUCCESS
+  UPDATE_USER_SUCCESS,
+  OPEN_ACCOUNT_DELETE_MODAL,
+  CLOSE_ACCOUNT_DELETE_MODAL
 } from '../actions/types'
 
 const initialState = {
   token: localStorage.getItem('token'),
-  isAuthenticated: null,
-  loading: true,
+  isAuthenticated: false,
+  userLoading: true,
   user: null,
-  validResetToken: false
+  validResetToken: false,
+  deleteAccountModalShow: false
 }
 
 export default function (state = initialState, action) {
@@ -26,14 +29,14 @@ export default function (state = initialState, action) {
     case SET_LOADING:
       return {
         ...state,
-        loading: payload
+        userLoading: payload
       }
     case USER_LOADED:
       return {
         ...state,
         user: payload,
         isAuthenticated: true,
-        loading: false
+        userLoading: false
       }
     case REGISTER_SUCCESS:
       return {
@@ -48,7 +51,7 @@ export default function (state = initialState, action) {
         ...state,
         ...payload,
         isAuthenticated: true,
-        loading: false
+        loading: true
       }
     case UPDATE_USER_SUCCESS:
       return {
@@ -91,6 +94,17 @@ export default function (state = initialState, action) {
       return {
         ...state,
         loading: false
+      }
+
+    case OPEN_ACCOUNT_DELETE_MODAL:
+      return {
+        ...state,
+        deleteAccountModalShow: true
+      }
+    case CLOSE_ACCOUNT_DELETE_MODAL:
+      return {
+        ...state,
+        deleteAccountModalShow: false
       }
 
     default:

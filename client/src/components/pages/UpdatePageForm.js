@@ -10,6 +10,7 @@ import {
   FormControl
 } from 'react-bootstrap'
 import { closeEditModal, updatePage } from '../../redux/actions/pages'
+import PropTypes from 'prop-types'
 
 const UpdatePageForm = ({
   pages: { editModalShow, current },
@@ -82,6 +83,7 @@ const UpdatePageForm = ({
   return (
     <Modal
       show={editModalShow}
+      onHide={closeEditModal}
       size='lg'
       aria-labelledby='contained-modal-title-vcenter'
       centered
@@ -135,6 +137,12 @@ const UpdatePageForm = ({
       </Modal.Footer>
     </Modal>
   )
+}
+
+UpdatePageForm.propTypes = {
+  pages: PropTypes.object.isRequired,
+  closeEditModal: PropTypes.func.isRequired,
+  updatePage: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({

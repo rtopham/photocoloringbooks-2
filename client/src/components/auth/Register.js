@@ -56,10 +56,10 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 
   return (
     <Container fluid className='authForms'>
-      <Card>
+      <Card border='dark' text='dark'>
         <Card.Header>
           <h1>
-            <span className='text-primary'>
+            <span>
               <i className='fas fa-user' /> Register
             </span>
           </h1>
@@ -129,7 +129,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
               type='submit'
               value='Register'
               disabled={!validateForm()}
-              className='btn btn-primary btn-block'
+              className='btn btn-dark btn-block'
             />
           </Form>
           <p></p>

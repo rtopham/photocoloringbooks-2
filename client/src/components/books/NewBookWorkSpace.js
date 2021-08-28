@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Image, Card } from 'react-bootstrap'
+import PropTypes from 'prop-types'
 
 const NewBookWorkSpace = ({
   books: {
@@ -25,13 +26,17 @@ const NewBookWorkSpace = ({
                 maxWidth: '200px',
                 maxHeight: '133px'
               }}
-              src={`/pages/${page.filename}`}
+              //              src={`/pages/${page.filename}`}
+              src={`${process.env.REACT_APP_IMAGE_URL}${page.filename}`}
             />
           ))}
         </div>
       </Card>
     </>
   )
+}
+NewBookWorkSpace.propTypes = {
+  books: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => ({

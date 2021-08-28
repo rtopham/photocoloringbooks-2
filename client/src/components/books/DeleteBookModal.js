@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Modal, Button, Image } from 'react-bootstrap'
 import { deleteBook, closeDeleteModal } from '../../redux/actions/books'
+import PropTypes from 'prop-types'
 
 const DeleteBookModal = ({
   books: { current, deleteModalShow },
@@ -28,7 +29,7 @@ const DeleteBookModal = ({
             return (
               <Image
                 thumbnail
-                src={`/pages/${page.filename}`}
+                src={`/api/pages/url/${page.filename}`}
                 className={'mr-3 mb-3'}
                 style={{ maxWidth: '80px', maxHeight: '52px' }}
                 key={page._id}
@@ -49,6 +50,13 @@ const DeleteBookModal = ({
       </Modal.Footer>
     </Modal>
   )
+}
+
+DeleteBookModal.propTypes = {
+  books: PropTypes.object.isRequired,
+  gallery: PropTypes.array.isRequired,
+  deleteBook: PropTypes.func.isRequired,
+  closeDeleteModal: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({

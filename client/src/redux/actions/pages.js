@@ -6,16 +6,18 @@ import {
   SAVE_PAGE,
   UPDATE_PAGE,
   SET_CURRENT_PAGE,
-  OPEN_EDIT_MODAL,
-  CLOSE_EDIT_MODAL,
-  OPEN_DELETE_MODAL,
-  CLOSE_DELETE_MODAL,
+  OPEN_PAGE_EDIT_MODAL,
+  CLOSE_PAGE_EDIT_MODAL,
+  OPEN_PAGE_DELETE_MODAL,
+  CLOSE_PAGE_DELETE_MODAL,
   GALLERY_LOADED,
   GALLERY_ERROR,
   FILTER_PAGES,
   CLEAR_FILTER,
   DELETE_PAGE,
-  SET_TAG_LIST
+  SET_TAG_LIST,
+  CLEAR_PAGES,
+  DELETE_ALL_PAGES
 } from './types'
 import { setAlert } from './alert'
 
@@ -45,6 +47,7 @@ export const savePage = (formData) => async (dispatch) => {
     const res = await api.post('/pages', formData)
     dispatch({ type: SAVE_PAGE, payload: res.data })
     dispatch(setAlert('Page Saved to Gallery', 'success'))
+    dispatch(loadGallery())
   } catch (err) {
     const errors = err.response.data.errors
 
@@ -63,12 +66,12 @@ export const setCurrentPage = (page) => (dispatch) => {
 //Open the Caption and Tags Modal
 
 export const openEditModal = () => (dispatch) => {
-  dispatch({ type: OPEN_EDIT_MODAL })
+  dispatch({ type: OPEN_PAGE_EDIT_MODAL })
 }
 //Close the Caption and Tags Modal
 
 export const closeEditModal = () => (dispatch) => {
-  dispatch({ type: CLOSE_EDIT_MODAL })
+  dispatch({ type: CLOSE_PAGE_EDIT_MODAL })
 }
 
 //Update Current Page in Database
@@ -78,6 +81,7 @@ export const updatePage = (page) => async (dispatch) => {
     const res = await api.put(`/pages/${page.id}`, page)
     dispatch({ type: UPDATE_PAGE, payload: res.data })
     dispatch(setAlert('Page Updated', 'success'))
+    dispatch(loadGallery())
   } catch (err) {
     const errors = err.response.data.errors
 
@@ -90,13 +94,13 @@ export const updatePage = (page) => async (dispatch) => {
 //Open the Delete Modal
 
 export const openDeleteModal = () => (dispatch) => {
-  dispatch({ type: OPEN_DELETE_MODAL })
+  dispatch({ type: OPEN_PAGE_DELETE_MODAL })
 }
 
 //Close the Delete Modal
 
 export const closeDeleteModal = () => (dispatch) => {
-  dispatch({ type: CLOSE_DELETE_MODAL })
+  dispatch({ type: CLOSE_PAGE_DELETE_MODAL })
 }
 
 //Delete Page
@@ -105,6 +109,21 @@ export const deletePage = (id) => async (dispatch) => {
     await api.delete(`/pages/${id}`)
     dispatch({ type: DELETE_PAGE, payload: id })
     dispatch(setAlert('Page Deleted', 'success'))
+  } catch (err) {
+    const errors = err.response.data.errors
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')))
+    }
+  }
+}
+
+//Delete All of User's Pages
+
+export const deletePages = () => async (dispatch) => {
+  try {
+    await api.delete('/pages/by-user')
+    dispatch({ type: DELETE_ALL_PAGES })
   } catch (err) {
     const errors = err.response.data.errors
 
@@ -150,4 +169,10 @@ export const filterPages = (text) => (dispatch) => {
 
 export const clearFilter = () => (dispatch) => {
   dispatch({ type: CLEAR_FILTER })
+}
+
+//Clear Pages
+
+export const clearPages = () => (dispatch) => {
+  dispatch({ type: CLEAR_PAGES })
 }

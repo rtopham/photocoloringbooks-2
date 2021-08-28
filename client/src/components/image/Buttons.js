@@ -1,6 +1,6 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import { Button, ButtonGroup, Col } from 'react-bootstrap'
+import PropTypes from 'prop-types'
 
 const Buttons = ({ pageObject, onClick, isAuthenticated, upLoad }) => {
   return (
@@ -54,9 +54,7 @@ const Buttons = ({ pageObject, onClick, isAuthenticated, upLoad }) => {
           >
             -
           </Button>
-        </ButtonGroup>
-      </Col>
-      <Col>
+        </ButtonGroup>{' '}
         <ButtonGroup>
           {isAuthenticated && (
             <Button
@@ -95,8 +93,11 @@ const Buttons = ({ pageObject, onClick, isAuthenticated, upLoad }) => {
   )
 }
 
-const mapStateToProps = (state) => ({
-  saving: state.pages.saving
-})
+Buttons.propTypes = {
+  pageObject: PropTypes.object.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+  onClick: PropTypes.func.isRequired,
+  upload: PropTypes.string
+}
 
-export default connect(mapStateToProps, {})(Buttons)
+export default Buttons

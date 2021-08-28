@@ -1,15 +1,19 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { Image, Card, Button, Form } from 'react-bootstrap'
+import { Redirect } from 'react-router-dom'
 import {
   setPageIndex,
   updateCurrentPage,
   saveBook
 } from '../../redux/actions/books'
 import CoverPage from './CoverPage'
+import NewBookHeader from './NewBookHeader'
+import PropTypes from 'prop-types'
 
 const BookPreview = ({
   books: {
+    current,
     current: {
       coverPage: {
         title,
@@ -30,24 +34,25 @@ const BookPreview = ({
   updateCurrentPage,
   saveBook
 }) => {
-  const [showCoverPage, setShowCoverPage] = useState(false)
+  const [redirect, setRedirect] = useState(false)
 
   const clickLeft = (e) => {
-    if (pageIndex === 0) setShowCoverPage(true)
-    if (pageIndex > 0) setPageIndex(pageIndex - 1)
+    if (pageIndex > -1) setPageIndex(pageIndex - 1)
   }
 
   const clickRight = (e) => {
-    if (showCoverPage) setShowCoverPage(false)
-    else {
-      if (pageIndex < pageList.length - 1) setPageIndex(pageIndex + 1)
-    }
+    if (pageIndex < pageList.length - 1) setPageIndex(pageIndex + 1)
   }
 
   const clickSave = (e) => {
-    const book = {
+    let book = {
       title: title || 'Untitled',
       pages: pageList.map((page) => page._id),
+      tags: [],
+      likes: [],
+      comments: [],
+      captions: captions,
+      pageNumbers: pageNumbers,
       coverPage: {
         title: title || '',
         textLine1: textLine1,
@@ -58,7 +63,9 @@ const BookPreview = ({
         footer: footer
       }
     }
+    if (current._id) book._id = current._id
     saveBook(book)
+    setRedirect(true)
   }
 
   const handleCheck = (e) => {
@@ -71,7 +78,6 @@ const BookPreview = ({
         },
         pageIndex: 0
       }
-      setShowCoverPage(true)
       updateCurrentPage(newValues)
     }
     if (e.currentTarget.id === 'coverPage' && !e.target.checked) {
@@ -81,17 +87,31 @@ const BookPreview = ({
         },
         pageIndex: 0
       }
-      setShowCoverPage(false)
+
       updateCurrentPage(newValues)
     }
   }
 
+  if (redirect) return <Redirect to='/books' />
+
+  if (pageList.length === 0) return <Redirect to='/books/create' />
   return (
     <>
+      <div className='container'>
+        <div className='mb-4'>
+          <NewBookHeader
+            heading='New Book: Preview'
+            backLink='/books/cover'
+            buttonCallBack={clickSave}
+            buttonText='Save Book'
+          />
+        </div>
+      </div>
+
       <Card className='mb-2'>
         <div style={{ minHeight: 710 }} className='mx-auto'>
-          {coverPage && showCoverPage && pageIndex === 0 ? (
-            <CoverPage />
+          {pageIndex === -1 ? (
+            <CoverPage preview={true} />
           ) : (
             <Image
               thumbnail
@@ -103,10 +123,10 @@ const BookPreview = ({
               src={`/pages/${pageList[pageIndex].filename}`}
             />
           )}
-          {captions && !showCoverPage && (
+          {captions && pageIndex > -1 && (
             <div className='text-center'>{pageList[pageIndex].caption}</div>
           )}
-          {pageNumbers && !showCoverPage && (
+          {pageNumbers && pageIndex > -1 && (
             <div className='text-center'>{pageIndex + 1}</div>
           )}
         </div>
@@ -115,7 +135,7 @@ const BookPreview = ({
           <Button
             onClick={clickLeft}
             variant='link'
-            disabled={(pageIndex === 0 && !coverPage) || showCoverPage}
+            disabled={pageIndex === -1}
           >
             <i className='fas fa-chevron-circle-left' />
           </Button>
@@ -143,30 +163,22 @@ const BookPreview = ({
               onChange={handleCheck}
               checked={pageNumbers}
             />
-
-            <Form.Check
-              inline
-              label='Cover page'
-              id='coverPage'
-              type='checkbox'
-              onChange={handleCheck}
-              checked={coverPage}
-            />
           </div>{' '}
-          <div className='float-right'>
-            <Button onClick={clickSave}>
-              <i className='fas fa-save mr-1' /> Save Book
-            </Button>
-          </div>
         </Card.Footer>
       </Card>
     </>
   )
 }
 
+BookPreview.propTypes = {
+  books: PropTypes.object.isRequired,
+  setPageIndex: PropTypes.func.isRequired,
+  updateCurrentPage: PropTypes.func.isRequired,
+  saveBook: PropTypes.func.isRequired
+}
+
 const mapStateToProps = (state) => ({
-  books: state.books,
-  pages: state.pages
+  books: state.books
 })
 
 export default connect(mapStateToProps, {

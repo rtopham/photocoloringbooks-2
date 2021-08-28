@@ -1,11 +1,10 @@
 import React from 'react'
-import { Container } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 const Alert = ({ alerts }) => {
   return (
-    <Container>
+    <>
       {alerts.length === 0 && <div className='alertDiv'></div>}
       {alerts !== null &&
         alerts.length > 0 &&
@@ -14,7 +13,7 @@ const Alert = ({ alerts }) => {
             {alert.msg}
           </div>
         ))}
-    </Container>
+    </>
   )
 }
 

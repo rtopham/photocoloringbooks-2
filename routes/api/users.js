@@ -112,7 +112,15 @@ router.put(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() })
     }
-    const { name, email, password } = req.body
+    const {
+      name,
+      email,
+      password,
+      stripeCustomerId,
+      stripeSubscriptionId,
+      galleryLimit,
+      bookLimit
+    } = req.body
 
     const userFields = {}
     if (name) userFields.name = name
@@ -121,6 +129,11 @@ router.put(
       const salt = await bcrypt.genSalt(10)
       userFields.password = await bcrypt.hash(password, salt)
     }
+    if (stripeCustomerId) userFields.stripeCustomerId = stripeCustomerId
+    if (stripeSubscriptionId)
+      userFields.stripeSubscriptionId = stripeSubscriptionId
+    if (galleryLimit) userFields.galleryLimit = galleryLimit
+    if (bookLimit) userFields.bookLimit = bookLimit
 
     try {
       const user = await User.findOneAndUpdate(
@@ -135,6 +148,21 @@ router.put(
     }
   }
 )
+
+//@route    DELETE api/users
+//@desc     Delete User
+//@access   Private
+
+router.delete('/', auth, async (req, res) => {
+  try {
+    const response = await User.findByIdAndRemove(req.user.id)
+
+    res.json(response)
+  } catch (err) {
+    console.error(err.message)
+    res.status(500).send('Server Error')
+  }
+})
 
 //@route    PUT api/users/password-reset-request
 //@desc     Handle request for password reset
@@ -186,7 +214,7 @@ router.post(
     try {
       const decoded = jwt.verify(token, config.get('jwtSecret'))
       const user = decoded.user
-      console.log(decoded)
+
       return res.status(200).json(decoded)
     } catch (err) {
       res.status(500).send('Server Error.')

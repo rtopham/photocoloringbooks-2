@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
+import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Image, Card, Button } from 'react-bootstrap'
 import CoverPageForm from './CoverPageForm'
 import { updateCoverPage, updateCurrentPage } from '../../redux/actions/books'
+import PropTypes from 'prop-types'
 
 const CoverPage = ({
   books: {
@@ -43,11 +45,13 @@ const CoverPage = ({
     'd-flex justify-content-center text-center align-items-center'
   const divStyles2 = 'justify-content-center text-center align-items-center'
 
+  if (gallery === null || gallery.length === 0) return <Redirect to='/books' />
+
   return (
     <>
-      <Card className='mb-2'>
+      <Card className='mb-2 mt-2'>
         <div
-          style={{ height: 700, width: 540 }}
+          style={{ height: 700, width: 540, border: '1px solid' }}
           className='mx-auto text-center'
         >
           <div style={{ height: '5%' }} className='light'>
@@ -58,29 +62,37 @@ const CoverPage = ({
               </Button>
             </span>
           </div>
-          <div style={{ height: '35%' }} className={divStyles2 + 'secondary'}>
+          <div style={{ height: '40%' }} className={divStyles2 + 'secondary'}>
             {coverPageType === 'single-image' && (
               <Image
                 style={{
                   maxWidth: '100%',
                   maxHeight: '100%'
                 }}
-                src={`/pages/${pageList[imageNumber - 1].filename}`}
+                /* src={`/pages/${pageList[imageNumber - 1].filename}`} */
+                src={`${process.env.REACT_APP_IMAGE_URL}${
+                  pageList[imageNumber - 1].filename
+                }`}
               />
             )}
             {coverPageType === 'collage' &&
-              pageList.map((page) => (
-                <Image
-                  style={{
-                    maxWidth: '200px',
-                    maxHeight: '133px'
-                  }}
-                  src={`/pages/${page.filename}`}
-                  key={page._id}
-                />
-              ))}
+              pageList.map((page, index) => {
+                if (index < 3)
+                  return (
+                    <Image
+                      style={{
+                        maxWidth: '200px',
+                        maxHeight: '133px'
+                      }}
+                      /* src={`/pages/${page.filename}`} */
+                      src={`${process.env.REACT_APP_IMAGE_URL}${page.filename}`}
+                      key={page._id}
+                    />
+                  )
+                else return null
+              })}
           </div>
-          <div style={{ height: '20%' }} className={divStyles + 'light'}>
+          <div style={{ height: '15%' }} className={divStyles + 'light'}>
             <h1>{changesMade ? title : '[Title]'}</h1>
           </div>
           <div style={{ height: '10%' }} className={divStyles + 'secondary'}>
@@ -105,6 +117,13 @@ const CoverPage = ({
       />
     </>
   )
+}
+
+CoverPage.propTypes = {
+  books: PropTypes.object.isRequired,
+  pages: PropTypes.object.isRequired,
+  updateCoverPage: PropTypes.func.isRequired,
+  updateCurrentPage: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
