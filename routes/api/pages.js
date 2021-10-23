@@ -20,6 +20,7 @@ const {
 
 const bucketName = config.get('AWS_BUCKET_NAME')
 const region = config.get('AWS_BUCKET_REGION')
+const folder = config.get('AWS_FOLDER_NAME')
 
 const s3 = new S3Client({
   region: 'us-west-2'
@@ -241,7 +242,7 @@ router.get('/url/:key', async (req, res) => {
   try {
     const downloadParams = {
       Bucket: bucketName,
-      Key: 'pages/' + req.params.key
+      Key: folder + req.params.key
     }
 
     const s3Object = await s3.send(new GetObjectCommand(downloadParams))

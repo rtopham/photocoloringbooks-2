@@ -31,7 +31,7 @@ ErrorModal.propTypes = {
   errorText: PropTypes.string,
   buttonText: PropTypes.string,
   show: PropTypes.bool.isRequired,
-  closeImageErrorModal: PropTypes.func.isRequired
+  closeErrorModal: PropTypes.func.isRequired
 }
 
 export default ErrorModal

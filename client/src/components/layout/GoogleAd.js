@@ -5,8 +5,8 @@ import PropTypes from 'prop-types'
 
 const GoogleAd = ({ stripe: { subscription } }) => {
   useEffect(() => {
-    if (process.env.REACT_APP_ADS);
-    ;(window.adsbygoogle = window.adsbygoogle || []).push({})
+    /*    if (process.env.REACT_APP_ADS);
+    ;(window.adsbygoogle = window.adsbygoogle || []).push({}) */
   }, [])
 
   let adContent = (
