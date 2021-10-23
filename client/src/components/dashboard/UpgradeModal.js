@@ -73,7 +73,10 @@ const UpgradeModal = ({
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p>Please enter a payment method to complete your upgrade for $5.95.</p>
+        <p>
+          Please enter a payment method to complete your upgrade for $
+          {process.env.REACT_APP_SUBSCRIPTION_PRICE}.
+        </p>
         <CardElement
           options={{
             style: {

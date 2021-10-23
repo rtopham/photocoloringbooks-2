@@ -98,7 +98,14 @@ const GalleryImage = ({
 
         <div className='galleryText'>
           <h6 style={{ maxWidth: '70px' }}>{page.caption.substring(0, 18)}</h6>
-          <h6>{page.date.substring(0, 10)}</h6>
+          {/* <h6>{page.date.substring(0, 10)}</h6> */}
+          <h6>
+            {new Date(page.date).toLocaleString('en-US', {
+              month: '2-digit',
+              day: '2-digit',
+              year: 'numeric'
+            })}
+          </h6>
         </div>
         <span>
           {' '}

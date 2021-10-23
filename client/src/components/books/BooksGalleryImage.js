@@ -2,9 +2,13 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { Card, Image, Button, Col, Row } from 'react-bootstrap'
-import { openDeleteModal, setCurrentBook } from '../../redux/actions/books'
+import {
+  openDeleteModal,
+  setCurrentBook,
+  updatePageList,
+  printPDF
+} from '../../redux/actions/books'
 
-import { updatePageList } from '../../redux/actions/books'
 import { bookPDF } from '../../pdf/bookPdf'
 import PropTypes from 'prop-types'
 
@@ -14,6 +18,7 @@ const BooksGalleryImage = ({
   openDeleteModal,
   setCurrentBook,
   updatePageList,
+  printPDF,
   pdfDisabled
 }) => {
   const styleObject = {
@@ -36,9 +41,14 @@ const BooksGalleryImage = ({
   }
 
   const clickPDF = () => {
-    bookPDF(
-      book,
-      gallery.filter((page) => book.pages.includes(page._id))
+    printPDF()
+    setTimeout(
+      () =>
+        bookPDF(
+          book,
+          gallery.filter((page) => book.pages.includes(page._id))
+        ),
+      500
     )
   }
 
@@ -67,38 +77,40 @@ const BooksGalleryImage = ({
           <span>. . .</span>
         </Col>
         <Col>
-          <div className='float-right mr-2 galleryImageBox'>
+          <div className='booksGalleryText'>
             <h6>{book.title}</h6>
-            <h6>{book.date && book.date.substring(0, 10)}</h6>
+            {/* <h6>{book.date && book.date.substring(0, 10)}</h6> */}
+            <h6>
+              {new Date(book.date).toLocaleString('en-US', {
+                month: '2-digit',
+                day: '2-digit',
+                year: 'numeric'
+              })}
+            </h6>
             <Button disabled={pdfDisabled} onClick={clickPDF}>
               Create PDF
             </Button>
-            {book.title.length < 10 && <br />}
-            {book.title.length < 15 && <br />}
-            <br />
-            <br />
-            <br />
-            <span className='float-right'>
-              {' '}
-              <Button
-                variant='link'
-                size='sm'
-                onClick={clickEdit}
-                className='editIcon'
-              >
-                <i className='fa fa-edit'></i>
-              </Button>
-              <Button
-                variant='link'
-                size='sm'
-                onClick={clickDelete}
-                className='deleteIcon'
-              >
-                <i className='fa fa-trash'></i>
-              </Button>
-            </span>
           </div>
         </Col>
+        <span>
+          {' '}
+          <Button
+            variant='link'
+            size='sm'
+            onClick={clickEdit}
+            className='editIcon'
+          >
+            <i className='fa fa-edit'></i>
+          </Button>
+          <Button
+            variant='link'
+            size='sm'
+            onClick={clickDelete}
+            className='deleteIcon'
+          >
+            <i className='fa fa-trash'></i>
+          </Button>
+        </span>
       </Row>
     </Card>
   )
@@ -119,5 +131,6 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   setCurrentBook,
   openDeleteModal,
-  updatePageList
+  updatePageList,
+  printPDF
 })(BooksGalleryImage)

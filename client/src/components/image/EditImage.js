@@ -1,20 +1,25 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { connect } from 'react-redux'
-import { setSaving } from '../../redux/actions/pages'
 import { Card, Button } from 'react-bootstrap'
+import PropTypes from 'prop-types'
+
+import { setSaving } from '../../redux/actions/pages'
+
 import Canvas from './Canvas'
 import Controls from './Controls'
-import PropTypes from 'prop-types'
+import ErrorModal from '../layout/ErrorModal'
 
 const EditImage = ({
   auth: { isAuthenticated, user },
   pages: { gallery },
   setSaving,
-  setShowLimitModal
+  setShowLimitModal,
+  resetAfterSave,
+  setResetAfterSave
 }) => {
   const initialState = {
     image_id: 'public',
-    title: '',
+    title: 'sample.jpg',
     threshold: 50,
     T2: 42,
     multiplier: 1,
@@ -31,18 +36,42 @@ const EditImage = ({
   const [pageObject, setPageObject] = useState(initialState)
   const [imageSource, setImageSource] = useState('/sample1.jpg')
   const [print, setPrint] = useState(false)
+  const [showImageErrorModal, setShowImageErrorModal] = useState(false)
+
+  useEffect(() => {
+    if (resetAfterSave) {
+      setPageObject({
+        ...initialState,
+        title: pageObject.title
+      })
+      setResetAfterSave(false)
+    }
+  }, [resetAfterSave, setResetAfterSave, initialState, pageObject.title])
 
   const iframe = useRef(null)
 
   const upLoadImage = (event) => {
-    const title = event.target.files[0].name
+    let title
+    if (event.target.files.length > 0) title = event.target.files[0].name
+    else title = pageObject.title
     let reader = new FileReader()
     reader.onload = (e) => {
       let image = e.target.result
 
-      setImageSource(image)
+      const contentArray = reader.result.split(',')
 
-      setPageObject({ ...initialState, title })
+      if (
+        contentArray[0] === 'data:image/png;base64' ||
+        contentArray[0] === 'data:image/jpg;base64' ||
+        contentArray[0] === 'data:image/jpeg;base64'
+      ) {
+        setImageSource(image)
+
+        //setPageObject({ ...initialState, title })
+        setPageObject({ ...pageObject, title })
+      } else {
+        setShowImageErrorModal(true)
+      }
     }
     if (event.target.files[0]) reader.readAsDataURL(event.target.files[0])
   }
@@ -113,11 +142,21 @@ const EditImage = ({
     }
   }
 
+  const closeImageErrorModal = () => {
+    setShowImageErrorModal(false)
+  }
+
   return (
     <>
+      <ErrorModal
+        title='Error'
+        errorText='File is not a vaild image file.'
+        show={showImageErrorModal}
+        closeErrorModal={closeImageErrorModal}
+      />
       <Card bg='dark' text='white' className='d-block mt-3'>
         <Card.Header>
-          {pageObject.title || 'sample.jpg'}
+          {pageObject.title}
           <Button
             className='float-right'
             variant='link'

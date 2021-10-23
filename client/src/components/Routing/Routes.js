@@ -28,7 +28,7 @@ import Contact from '../layout/Contact'
 const Routes = () => {
   return (
     <Fragment>
-      <Container>
+      <Container style={{ minHeight: window.innerHeight - 200 }}>
         <Switch>
           <Route exact path='/' component={null} />
           <Route exact path='/privacy-policy' component={null} />
@@ -39,8 +39,12 @@ const Routes = () => {
 
         <Switch>
           <Route exact path='/' component={Landing} />
-          <Route exact path='/register' component={Register} />
-          <Route exact path='/login' component={Login} />
+          {process.env.REACT_APP_NAV === 'true' && (
+            <Route exact path='/register' component={Register} />
+          )}
+          {process.env.REACT_APP_NAV === 'true' && (
+            <Route exact path='/login' component={Login} />
+          )}
           <Route
             exact
             path='/password-reset-request'

@@ -25,7 +25,7 @@ app.use('/api/stripe', require('./routes/api/stripe'))
 
 // Serve Static Files
 
-app.use(express.static(path.join(__dirname, 'uploads')))
+//app.use(express.static(path.join(__dirname, 'uploads')))
 
 const PORT = process.env.PORT || 5000
 

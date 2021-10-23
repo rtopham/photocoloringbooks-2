@@ -26,7 +26,6 @@ const NewBookWorkSpace = ({
                 maxWidth: '200px',
                 maxHeight: '133px'
               }}
-              //              src={`/pages/${page.filename}`}
               src={`${process.env.REACT_APP_IMAGE_URL}${page.filename}`}
             />
           ))}

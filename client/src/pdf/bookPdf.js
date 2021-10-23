@@ -60,7 +60,10 @@ export const bookPDF = (book, pageArray) => {
 
   //Add designated single image if cover page type is single-image
 
-  if (coverPageType === 'single-image') {
+  if (
+    (coverPageType === 'single-image' || pageArray.length === 1) &&
+    coverPageType !== 'no-image'
+  ) {
     const image = pdf.getImageProperties(
       `${process.env.REACT_APP_IMAGE_URL}${pageArray[imageNumber - 1].filename}`
     )
@@ -72,7 +75,9 @@ export const bookPDF = (book, pageArray) => {
     targetWidth = targetHeight * aspectRatio
 
     pdf.addImage(
-      `${process.env.REACT_APP_IMAGE_URL}$pageArray[imageNumber - 1].filename}`,
+      `${process.env.REACT_APP_IMAGE_URL}${
+        pageArray[imageNumber - 1].filename
+      }`,
       'JPEG',
       horizontalCenter - targetWidth / 2,
       20,
@@ -83,14 +88,13 @@ export const bookPDF = (book, pageArray) => {
 
   //Add up to three images if cover page type is collage
 
-  if (coverPageType === 'collage') {
+  if (coverPageType === 'collage' && pageArray.length > 1) {
     const collageArray = pageArray.filter((page, index) => index < 3)
 
     const imageArray = collageArray.map((page, index) => {
       const image = pdf.getImageProperties(
         `${process.env.REACT_APP_IMAGE_URL}${page.filename}`
       )
-      console.log(`${process.env.REACT_APP_IMAGE_URL}${page.filename}`)
 
       const { height, width } = image
 

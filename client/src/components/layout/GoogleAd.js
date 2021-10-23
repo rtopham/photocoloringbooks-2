@@ -5,32 +5,35 @@ import PropTypes from 'prop-types'
 
 const GoogleAd = ({ stripe: { subscription } }) => {
   useEffect(() => {
-    //    ;(window.adsbygoogle = window.adsbygoogle || []).push({})
+    if (process.env.REACT_APP_ADS);
+    ;(window.adsbygoogle = window.adsbygoogle || []).push({})
   }, [])
 
-  /*   return (
-    <div className='ad'>
-      <ins
-        className='adsbygoogle'
-        style={{ display: 'block' }}
-        data-ad-client='ca-pub-7288454427087847'
-        data-ad-slot='6536318459'
-        data-ad-format='auto'
-        data-full-width-responsive='true'
-      ></ins>
+  let adContent = (
+    <div className=' mb-4'>
+      <Image
+        fluid
+        src='https://storage.googleapis.com/support-kms-prod/SNP_59D432450939ECC60A21BEDBEE985B1817B1_3094744_en_v2'
+      />
     </div>
-  ) 
- */
+  )
 
-  if (!subscription || (subscription && subscription.status !== 'active'))
-    return (
-      <div className=' mb-4'>
-        <Image
-          fluid
-          src='https://storage.googleapis.com/support-kms-prod/SNP_59D432450939ECC60A21BEDBEE985B1817B1_3094744_en_v2'
-        />
+  if (process.env.REACT_APP_ADS)
+    adContent = (
+      <div className=''>
+        <ins
+          className='adsbygoogle'
+          style={{ display: 'block' }}
+          data-ad-client='ca-pub-7288454427087847'
+          data-ad-slot='6536318459'
+          data-ad-format='auto'
+          data-full-width-responsive='true'
+        ></ins>
       </div>
     )
+
+  if (!subscription || (subscription && subscription.status !== 'active'))
+    return adContent
 
   return null
 }

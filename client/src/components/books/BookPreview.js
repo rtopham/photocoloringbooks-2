@@ -120,7 +120,7 @@ const BookPreview = ({
                 maxWidth: '800px',
                 maxHeight: '600px'
               }}
-              src={`/pages/${pageList[pageIndex].filename}`}
+              src={`${process.env.REACT_APP_IMAGE_URL}${pageList[pageIndex].filename}`}
             />
           )}
           {captions && pageIndex > -1 && (

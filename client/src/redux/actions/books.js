@@ -14,10 +14,18 @@ import {
   CLOSE_BOOK_DELETE_MODAL,
   DELETE_BOOK,
   CLEAR_BOOKS,
-  DELETE_ALL_BOOKS
+  DELETE_ALL_BOOKS,
+  PRINT_PDF
 } from './types'
 
 import { setAlert } from './alert'
+
+//Print PDF
+
+export const printPDF = () => (dispatch) => {
+  dispatch({ type: PRINT_PDF })
+  dispatch(setAlert('Generating PDF. . .Please wait.', 'success'))
+}
 
 //Clear Books
 export const clearBooks = () => (dispatch) => {

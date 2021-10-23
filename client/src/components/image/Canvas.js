@@ -20,6 +20,7 @@ const Canvas = ({
   const mainCanvas = useRef(null)
 
   const widthVariable = 978
+  //  const heightVariable = 500
 
   useEffect(() => {
     let img = new Image()
@@ -45,6 +46,12 @@ const Canvas = ({
       const aspectRatio = image.naturalWidth / image.naturalHeight
       canvas.width = width
       canvas.height = Math.floor(width / aspectRatio)
+
+      /*       if (canvas.height > heightVariable) {
+        canvas.height = heightVariable
+        canvas.width = Math.floor(canvas.height * aspectRatio)
+      } */
+
       ctx.drawImage(image, 0, 0, canvas.width, canvas.height)
 
       if (pageObject.gray) {

@@ -20,7 +20,7 @@ const NewBookHeader = ({
         {forwardLink && (
           <Link to={forwardLink}>
             <Button className='float-right' disabled={disabled}>
-              {buttonText}
+              {!disabled && <i className='fas fa-caret-right' />} {buttonText}
             </Button>
           </Link>
         )}

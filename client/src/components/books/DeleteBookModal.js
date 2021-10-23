@@ -38,9 +38,12 @@ const DeleteBookModal = ({
           else return null
         })}
         <span>. . .</span>
-        <div className='float-right mr-2'>
+        <div className='mr-2'>
           <h6>{current.title}</h6>
           <h6>{current.date.substring(0, 10)}</h6>
+        </div>
+        <div className='float-left'>
+          Deleting this book will not delete any of the included pages.
         </div>
       </Modal.Body>
 

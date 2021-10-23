@@ -17,6 +17,7 @@ const uploadFormData = new FormData()
 const CreatePageForm = ({
   pages: { editModalShow, srcBlob },
   closeEditModal,
+  setResetAfterSave,
   savePage
 }) => {
   const initialState = {
@@ -64,6 +65,7 @@ const CreatePageForm = ({
     uploadFormData.set('page', srcBlob)
     savePage(uploadFormData)
     setFormData(initialState)
+    //setResetAfterSave(true)
 
     //savePage(page)
   }
@@ -111,7 +113,7 @@ const CreatePageForm = ({
               ))}
             </FormLabel>
             <FormControl
-              placeholder='Enter a tag and "Enter" to add.'
+              placeholder='Type a tag name and press "Enter" to add.'
               name='tag'
               value={tag}
               onChange={onChange}
@@ -131,6 +133,7 @@ const CreatePageForm = ({
 CreatePageForm.propTypes = {
   pages: PropTypes.object.isRequired,
   closeEditModal: PropTypes.func.isRequired,
+  setResetAfterSave: PropTypes.func.isRequired,
   savePage: PropTypes.func.isRequired
 }
 

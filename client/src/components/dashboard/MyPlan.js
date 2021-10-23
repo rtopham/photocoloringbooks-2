@@ -7,7 +7,7 @@ import PropTypes from 'prop-types'
 const MyPlan = ({ stripe: { subscription } }) => {
   const [mode, setMode] = useState('null')
 
-  const upgradePrice = '$5.95'
+  const upgradePrice = process.env.REACT_APP_SUBSCRIPTION_PRICE
 
   const clickUpgrade = () => {
     setMode('upgrade')
@@ -45,7 +45,7 @@ const MyPlan = ({ stripe: { subscription } }) => {
                 <td>Cost</td>
 
                 <td>
-                  One year for {upgradePrice} (no automatic renewals or
+                  One year for ${upgradePrice} (no automatic renewals or
                   recurring charges. Renew only if you want to).
                 </td>
               </tr>
@@ -108,7 +108,7 @@ const MyPlan = ({ stripe: { subscription } }) => {
             still have access to your pages and coloring books, but PDF features
             have been disabled. To restore PDF features and enjoy ad-free access
             to your pages and coloring books, please renew your subscription.
-            You may renew your subscription for one-year for {upgradePrice}.
+            You may renew your subscription for one-year for ${upgradePrice}.
             Your subscription will not renew automatically. Renew only if you
             want to.
           </p>{' '}
@@ -132,7 +132,7 @@ const MyPlan = ({ stripe: { subscription } }) => {
                 <td>Cost</td>
                 <td>Free</td>
                 <td>
-                  One year for {upgradePrice} (no automatic renewals or
+                  One year for ${upgradePrice} (no automatic renewals or
                   recurring charges. Renew only if you want to).
                 </td>
               </tr>
@@ -184,8 +184,9 @@ const MyPlan = ({ stripe: { subscription } }) => {
             </tbody>
           </Table>
           <p>
-            The premium plan is available for a yearly fee of {upgradePrice}. No
-            automatic renewals or recurring charges, renew only if you want to.
+            The premium plan is available for a yearly fee of ${upgradePrice}.
+            No automatic renewals or recurring charges, renew only if you want
+            to.
           </p>
           <Button onClick={clickUpgrade}>Upgrade to Premium</Button>
         </>

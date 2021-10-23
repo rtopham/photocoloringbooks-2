@@ -12,7 +12,7 @@ const MainNavbar = ({ title, auth: { isAuthenticated, user }, logout }) => {
 
   const authLinks = (
     <Fragment>
-      <Navbar.Text>{user && 'Hello ' + user.name} </Navbar.Text>
+      <Navbar.Text>{user && 'Hello, ' + user.name} </Navbar.Text>
       <Nav>
         <Nav.Item>
           <Nav.Link as={Link} to='/pages'>
@@ -43,7 +43,7 @@ const MainNavbar = ({ title, auth: { isAuthenticated, user }, logout }) => {
     </Fragment>
   )
 
-  const guestLinks = (
+  let guestLinks = (
     <Fragment>
       <Nav>
         <Nav.Item>
@@ -60,6 +60,8 @@ const MainNavbar = ({ title, auth: { isAuthenticated, user }, logout }) => {
       </Nav>
     </Fragment>
   )
+
+  if (process.env.REACT_APP_NAV !== 'true') guestLinks = null
 
   return (
     <div>

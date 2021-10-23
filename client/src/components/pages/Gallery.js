@@ -31,7 +31,7 @@ const Gallery = ({
           You do not have any pages saved.
           <br />
           To create a new coloring book page go to:{' '}
-          <Link to='/pages'>Pages</Link>.
+          <Link to='/pages'>Create Pages</Link>.
         </p>
       </div>
     )

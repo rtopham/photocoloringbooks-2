@@ -21,7 +21,9 @@ import setAuthToken from './utils/setAuthToken'
 
 import './App.css'
 
-const stripePromise = loadStripe('pk_test_0vcUzhimBNZs7qlLw3W6pAdI')
+const stripePromise = loadStripe(
+  'pk_test_51JTZdPFDSt74QKNTDb2Dt5XTww2Eqa4r3Z51N5xBXvhEs4DVTj7XuIaW0LuNuNNAXPMJlD0C99iV3FzCr0y4BktJ00atdPPJEz'
+)
 
 const App = () => {
   useEffect(() => {

@@ -1,5 +1,11 @@
 import React from 'react'
-import { Button, ButtonGroup, Col } from 'react-bootstrap'
+import {
+  Button,
+  ButtonGroup,
+  Col,
+  OverlayTrigger,
+  Tooltip
+} from 'react-bootstrap'
 import PropTypes from 'prop-types'
 
 const Buttons = ({ pageObject, onClick, isAuthenticated, upLoad }) => {
@@ -67,13 +73,35 @@ const Buttons = ({ pageObject, onClick, isAuthenticated, upLoad }) => {
               Save
             </Button>
           )}
+          {!isAuthenticated && (
+            <OverlayTrigger
+              overlay={
+                <Tooltip id='register-to-save'>
+                  Register to save pages to the gallery.
+                </Tooltip>
+              }
+            >
+              <span>
+                <Button
+                  variant='primary'
+                  id='save'
+                  onClick={onClick}
+                  active={false}
+                  disabled={true}
+                  style={{ pointerEvents: 'none' }}
+                >
+                  Save
+                </Button>
+              </span>
+            </OverlayTrigger>
+          )}
         </ButtonGroup>{' '}
         {
           <React.Fragment>
             <span>
               <input
                 className='d-none'
-                accept='image/*'
+                accept='.jpg,.png,.jpeg'
                 onChange={upLoad}
                 id='icon-button-file-2'
                 type='file'

@@ -122,7 +122,7 @@ const UpdatePageForm = ({
               ))}
             </FormLabel>
             <FormControl
-              placeholder='Enter a tag and "Enter" to add.'
+              placeholder='Type a tag name and press "Enter" to add.'
               name='tag'
               value={tag}
               onChange={onChange}

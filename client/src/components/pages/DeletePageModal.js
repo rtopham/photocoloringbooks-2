@@ -30,6 +30,10 @@ const DeletePageModal = ({
           <h6>{current.caption}</h6>
           <h6>{current.date.substring(0, 10)}</h6>
         </div>
+        <div>
+          <i className='fa fa-exclamation-triangle'></i> Deleting this page will
+          also remove it from any coloring books that include it.
+        </div>
       </Modal.Body>
 
       <Modal.Footer>

@@ -25,6 +25,7 @@
 
 .ad {
   border: solid blue;
+  min-height: 88px;
 }
 
 .imageCanvas {
@@ -38,10 +39,6 @@ div.container {
 
 .galleryImageThumb {
   max-width: 200;
-}
-
-.galleryImageBox {
-  position: relative;
 }
 
 .editIcon {
@@ -61,7 +58,16 @@ div.container {
   left: 210px;
 }
 
-/* section.container {
-  max-width: 973px;
-  border: solid blue;
+/* .booksGalleryText {
+  min-height: 198px;
+  max-width: 150px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
 } */
+
+.booksGalleryText {
+  position: absolute;
+  top: 0px;
+  left: 15px;
+}
