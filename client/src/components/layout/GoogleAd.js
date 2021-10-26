@@ -5,7 +5,6 @@ import PropTypes from 'prop-types'
 
 const GoogleAd = ({ stripe: { subscription } }) => {
   useEffect(() => {
-    console.log(process.env.REACT_APP_MODE)
     if (
       process.env.REACT_APP_ADS &&
       process.env.REACT_APP_MODE !== 'development'
