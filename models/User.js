@@ -30,7 +30,11 @@ const UserSchema = new mongoose.Schema({
     default: 6
   },
   stripeCustomerId: { type: String, default: null },
-  stripeSubscriptionId: { type: String, default: null }
+  stripeSubscriptionId: { type: String, default: null },
+  role:{
+    type:String,
+    default:'user'
+  }
 })
 
 module.exports = User = mongoose.model('user', UserSchema)

@@ -1,12 +1,15 @@
 import React from 'react'
 import { Spinner } from 'react-bootstrap'
-import { Route, Redirect } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-const PrivateRoute = ({
+import NotFound from '../layout/NotFound'
+
+const AdminRoute = ({
   component: Component,
-  auth: { isAuthenticated, userLoading },
+  auth,
+  auth: { isAuthenticated, userLoading, user },
   books: { booksLoading },
   pages: { galleryLoading },
   ...rest
@@ -15,23 +18,30 @@ const PrivateRoute = ({
     <Route
       {...rest}
       render={(props) =>
-        isAuthenticated && (userLoading || booksLoading || galleryLoading) ? (
+        isAuthenticated &&
+        (!user || userLoading || booksLoading || galleryLoading) ? (
           <Spinner
             animation='border'
             variant='primary'
             className='d-block mx-auto'
           />
-        ) : isAuthenticated ? (
+        ) : isAuthenticated &&
+          !userLoading &&
+          !booksLoading &&
+          !galleryLoading &&
+          user.role === 'admin' ? (
           <Component {...props} />
-        ) : (
-          <Redirect to='/login' />
-        )
+        ) : isAuthenticated && !userLoading && user.role !== 'admin' ? (
+          <NotFound />
+        ) : !isAuthenticated && !userLoading ? (
+          <NotFound />
+        ) : null
       }
     />
   )
 }
 
-PrivateRoute.propTypes = {
+AdminRoute.propTypes = {
   auth: PropTypes.object.isRequired,
   pages: PropTypes.object.isRequired,
   books: PropTypes.object.isRequired
@@ -43,4 +53,4 @@ const mapStateToProps = (state) => ({
   books: state.books
 })
 
-export default connect(mapStateToProps)(PrivateRoute)
+export default connect(mapStateToProps)(AdminRoute)

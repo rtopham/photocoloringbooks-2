@@ -19,6 +19,8 @@ app.get('/', (req, res) => res.send('API Running'))
 //Define Routes
 app.use('/api/users', require('./routes/api/users'))
 app.use('/api/auth', require('./routes/api/auth'))
+app.use('/api/logs', require('./routes/api/logs'))
+app.use('/api/stats', require('./routes/api/stats'))
 app.use('/api/pages', require('./routes/api/pages'))
 app.use('/api/books', require('./routes/api/books'))
 app.use('/api/stripe', require('./routes/api/stripe'))

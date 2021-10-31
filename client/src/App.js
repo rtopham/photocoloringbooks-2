@@ -18,6 +18,7 @@ import { loadUser, setLoading } from './redux/actions/auth'
 
 //Utils
 import setAuthToken from './utils/setAuthToken'
+import setLogSecretHeader from './utils/setLogSecretHeader'
 
 import './App.css'
 
@@ -25,6 +26,8 @@ const stripePromise = loadStripe(`${process.env.REACT_APP_STRIPE_PUBLIC_KEY}`)
 
 const App = () => {
   useEffect(() => {
+    //set Log Secret Header
+    setLogSecretHeader(`${process.env.REACT_APP_LOG_SECRET}`)
     //check for token in local storage
     if (localStorage.token) {
       setAuthToken(localStorage.token)

@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import { Container } from 'react-bootstrap'
 import { Route, Switch } from 'react-router-dom'
 import PrivateRoute from './PrivateRoute'
+import AdminRoute from './AdminRoute'
 import NotFound from '../layout/NotFound'
 import Register from '../auth/Register'
 import Login from '../auth/Login'
@@ -24,6 +25,7 @@ import PrivacyPolicy from '../layout/PrivacyPolicy'
 import TermsOfUse from '../layout/TermsOfUse'
 import Landing from '../layout/Landing'
 import Contact from '../layout/Contact'
+import Admin from '../admin/Admin'
 
 const Routes = () => {
   return (
@@ -83,6 +85,7 @@ const Routes = () => {
             component={EditBookPreview}
           />
           <PrivateRoute exact path='/books' component={ColoringBooks} />
+          <AdminRoute exact path='/admin' component={Admin} />
           <Route component={NotFound} />
         </Switch>
       </Container>

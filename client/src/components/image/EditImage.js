@@ -4,6 +4,7 @@ import { Card, Button } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 
 import { setSaving } from '../../redux/actions/pages'
+import { recordImageLoadStats } from '../../redux/actions/stats'
 
 import Canvas from './Canvas'
 import Controls from './Controls'
@@ -13,6 +14,7 @@ const EditImage = ({
   auth: { isAuthenticated, user },
   pages: { gallery },
   setSaving,
+  recordImageLoadStats,
   setShowLimitModal,
   resetAfterSave,
   setResetAfterSave
@@ -69,6 +71,7 @@ const EditImage = ({
 
         //setPageObject({ ...initialState, title })
         setPageObject({ ...pageObject, title })
+        recordImageLoadStats()
       } else {
         setShowImageErrorModal(true)
       }
@@ -195,6 +198,7 @@ EditImage.propTypes = {
   auth: PropTypes.object.isRequired,
   pages: PropTypes.object.isRequired,
   setSaving: PropTypes.func.isRequired,
+  recordLog: PropTypes.func.isRequired,
   setShowLimitModal: PropTypes.func
 }
 
@@ -203,4 +207,6 @@ const mapStateToProps = (state) => ({
   pages: state.pages
 })
 
-export default connect(mapStateToProps, { setSaving })(EditImage)
+export default connect(mapStateToProps, { setSaving, recordImageLoadStats })(
+  EditImage
+)

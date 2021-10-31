@@ -27,6 +27,7 @@ import {
   OPEN_ACCOUNT_DELETE_MODAL,
   CLOSE_ACCOUNT_DELETE_MODAL
 } from './types'
+import { recordLoginStats } from './stats'
 
 // Set Loading
 
@@ -93,7 +94,7 @@ export const login = (email, password) => async (dispatch) => {
       type: LOGIN_SUCCESS,
       payload: res.data
     })
-
+    dispatch(recordLoginStats())
     dispatch(loadUser())
   } catch (err) {
     console.error(err)
