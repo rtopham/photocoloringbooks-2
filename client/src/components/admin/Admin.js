@@ -1,17 +1,17 @@
 import React, { useEffect } from 'react'
-import { Table, Spinner } from 'react-bootstrap'
+import { Spinner } from 'react-bootstrap'
 import { connect } from 'react-redux'
 
 import { loadStats } from '../../redux/actions/stats'
 
-import StatRow from './StatRow'
+import StatTable from './StatTable'
 
-const Admin = ({ stats: { stats }, loadStats }) => {
+const Admin = ({ stats: { stats, allTimeStats, statTables }, loadStats }) => {
   useEffect(() => {
     if (stats === null) loadStats()
-    console.log(stats)
   }, [stats, loadStats])
-  if (!stats)
+
+  if (!stats || !allTimeStats || statTables.length === 0)
     return (
       <Spinner
         animation='border'
@@ -19,22 +19,12 @@ const Admin = ({ stats: { stats }, loadStats }) => {
         className='d-block mx-auto'
       />
     )
+
   return (
     <>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Stat</th>
-            <th>Date Initiated</th>
-            <th>Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          {stats.map((stat, i) => {
-            return <StatRow stat={stat} key={stat._id} />
-          })}
-        </tbody>
-      </Table>
+      {statTables.map((statTable, i) => {
+        return <StatTable tableData={statTable} key={i} />
+      })}
     </>
   )
 }

@@ -71,3 +71,7 @@ div.container {
   top: 0px;
   left: 15px;
 }
+
+.statsTable td {
+  width: 33%;
+}

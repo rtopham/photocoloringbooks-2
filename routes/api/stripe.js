@@ -3,6 +3,7 @@ const router = express.Router()
 const config = require('config')
 const { check, validationResult } = require('express-validator')
 const auth = require('../../middleware/auth')
+const authAdmin = require('../../middleware/authAdmin')
 const { set } = require('mongoose')
 
 const stripe = require('stripe')(config.get('stripeSecretKey'))
@@ -226,6 +227,99 @@ router.get(
       const card = await stripe.paymentMethods.retrieve(req.params.id)
 
       res.json(card)
+    } catch (err) {
+      console.error(err.message)
+      res.status(500).send('Server error.')
+    }
+  }
+)
+
+//@route  GET api/stripe/active-subscriptions
+//@desc   Get number of active subscriptions
+//@access Private--admin only
+
+router.get(
+  '/active-subscriptions',
+  auth,
+  authAdmin,
+
+  async (req, res) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() })
+    }
+
+    const today = new Date()
+
+    const firstDayOfTheMonth = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      1
+    )
+
+    let firstDayOfLastMonth
+
+    if (today.getMonth() === 0) {
+      firstDayOfLastMonth = new Date(today.getFullYear() - 1, 11, 1)
+    } else {
+      firstDayOfLastMonth = new Date(
+        today.getFullYear(),
+        today.getMonth() - 1,
+        1
+      )
+    }
+
+    const firstDayOfThisYear = new Date(today.getFullYear(), 0, 1)
+    const firstDayOfLastYear = new Date(today.getFullYear() - 1, 0, 1)
+
+    const firstDayOfLastMonthTimeStamp = Math.floor(
+      firstDayOfLastMonth / 1000
+    ).toString()
+    const firstDayOfTheMonthTimeStamp = Math.floor(
+      firstDayOfTheMonth / 1000
+    ).toString()
+    const firstDayOfThisYearTimeStamp = Math.floor(
+      firstDayOfThisYear / 1000
+    ).toString()
+    const firstDayOfLastYearTimeStamp = Math.floor(
+      firstDayOfLastYear / 1000
+    ).toString()
+
+    try {
+      const subscriptions = await stripe.subscriptions.list()
+
+      const subscriptionsLastMonth = await stripe.subscriptions.list({
+        current_period_start: {
+          gte: firstDayOfLastMonthTimeStamp,
+          lt: firstDayOfTheMonthTimeStamp
+        }
+      })
+      const subscriptionsThisMonth = await stripe.subscriptions.list({
+        current_period_start: { gte: firstDayOfTheMonthTimeStamp }
+      })
+      const subscriptionsThisYear = await stripe.subscriptions.list({
+        current_period_start: { gte: firstDayOfThisYearTimeStamp }
+      })
+      const subscriptionsLastYear = await stripe.subscriptions.list({
+        current_period_start: {
+          gte: firstDayOfLastYearTimeStamp,
+          lt: firstDayOfThisYearTimeStamp
+        }
+      })
+
+      const subscriptionsCount = subscriptions.data.length
+      const subscriptionsLastMonthCount = subscriptionsLastMonth.data.length
+      const subscriptionsThisMonthCount = subscriptionsThisMonth.data.length
+      const subscriptionsThisYearCount = subscriptionsThisYear.data.length
+      const subscriptionsLastYearCount = subscriptionsLastYear.data.length
+
+      res.json({
+        subscriptionsCount,
+        subscriptionsThisMonthCount,
+        subscriptionsLastMonthCount,
+        subscriptionsThisYearCount,
+        subscriptionsLastYearCount
+      })
     } catch (err) {
       console.error(err.message)
       res.status(500).send('Server error.')

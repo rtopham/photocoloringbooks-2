@@ -20,6 +20,7 @@ import {
   DELETE_ALL_PAGES
 } from './types'
 import { setAlert } from './alert'
+import { recordPageSaveStats } from './stats'
 
 //Set Saving Boolean
 
@@ -46,6 +47,7 @@ export const savePage = (formData) => async (dispatch) => {
   try {
     const res = await api.post('/pages', formData)
     dispatch({ type: SAVE_PAGE, payload: res.data })
+    dispatch(recordPageSaveStats())
     dispatch(setAlert('Page Saved to Gallery', 'success'))
     dispatch(loadGallery())
   } catch (err) {

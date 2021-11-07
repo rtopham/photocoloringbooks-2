@@ -19,6 +19,7 @@ import {
 } from './types'
 
 import { setAlert } from './alert'
+import { recordBookSaveStats } from './stats'
 
 //Print PDF
 
@@ -84,6 +85,7 @@ export const saveBook = (book) => async (dispatch) => {
       errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')))
     }
   }
+  dispatch(recordBookSaveStats())
   dispatch(setAlert('Coloring Book Saved', 'success'))
   dispatch(loadBooks())
   dispatch({ type: CLEAR_CURRENT_BOOK })

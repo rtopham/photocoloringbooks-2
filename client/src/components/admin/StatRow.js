@@ -1,14 +1,18 @@
 import React from 'react'
 
-const StatRow = ({ stat }) => {
-  const date = new Date(stat.date).toString().substr(4, 11)
+const StatRow = ({ title, date, amount }) => {
   return (
     <>
       <tr>
-        <td>{stat.description}</td>
-        <td>{date}</td>
-
-        <td>{stat.amount}</td>
+        <td>{title}</td>
+        <td>{amount}</td>
+        <td>
+          {new Date(date).toLocaleString('en-us', {
+            month: 'long',
+            day: 'numeric',
+            year: 'numeric'
+          })}
+        </td>
       </tr>
     </>
   )

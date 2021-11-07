@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import {
   Container,
   Card,
@@ -18,7 +19,7 @@ import PropTypes from 'prop-types'
 import GoogleAd from '../layout/GoogleAd'
 
 const Dashboard = ({ auth: { user } }) => {
-  const { avatar, name, email, date, _id } = user
+  const { avatar, name, email, date, _id, role } = user
 
   return (
     <Container>
@@ -69,6 +70,7 @@ const Dashboard = ({ auth: { user } }) => {
           </Tab>
         </Tabs>
       </div>
+      {role === 'admin' && <Link to='/admin'>Admin Page</Link>}
     </Container>
   )
 }

@@ -9,7 +9,7 @@ module.exports = function (req, res, next) {
   if (!secret) {
     return res
       .status(401)
-      .json({ msg: 'Authorization denied, no logggin credentials.' })
+      .json({ msg: 'Authorization denied, no logging credentials.' })
   }
 
   //Verify secret

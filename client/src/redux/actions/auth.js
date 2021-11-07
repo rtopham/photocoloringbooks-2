@@ -27,7 +27,7 @@ import {
   OPEN_ACCOUNT_DELETE_MODAL,
   CLOSE_ACCOUNT_DELETE_MODAL
 } from './types'
-import { recordLoginStats } from './stats'
+import { recordLoginStats, recordSignUpStats } from './stats'
 
 // Set Loading
 
@@ -69,6 +69,7 @@ export const register = (formData) => async (dispatch) => {
       type: REGISTER_SUCCESS,
       payload: res.data
     })
+    dispatch(recordSignUpStats())
     dispatch(loadUser())
   } catch (err) {
     const errors = err.response.data.errors

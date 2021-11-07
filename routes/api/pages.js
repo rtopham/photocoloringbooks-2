@@ -92,7 +92,7 @@ router.post('/', auth, async (req, res) => {
       //Upload to AWS S3
       const uploadParams = {
         Bucket: bucketName,
-        Key: 'pages/' + imgUrl + ext,
+        Key: folder + imgUrl + ext,
         Body: fileContent
       }
 
@@ -159,7 +159,7 @@ router.delete('/by-user', auth, async (req, res) => {
       return res.status(404).json({ msg: 'No Pages found' })
 
     const objects = pages.map((object) => {
-      return { Key: 'pages/' + object.filename }
+      return { Key: folder + object.filename }
     })
 
     //Delete from Database
@@ -208,7 +208,7 @@ router.delete('/:id', auth, async (req, res) => {
 
     const deleteParams = {
       Bucket: bucketName,
-      Key: 'pages/' + page.filename
+      Key: folder + page.filename
     }
 
     const response = await s3.send(new DeleteObjectCommand(deleteParams))
