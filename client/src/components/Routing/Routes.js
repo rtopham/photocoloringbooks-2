@@ -39,24 +39,25 @@ const Routes = () => {
           <Route component={Alert} />
         </Switch>
 
-        {process.env.REACT_APP_NAV === 'true' && (
-          <Switch>
+        <Switch>
+          {process.env.REACT_APP_NAV === 'true' && (
             <Route exact path='/register' component={Register} />
+          )}
 
-            <Route exact path='/login' component={Login} />
+          <Route exact path='/login' component={Login} />
 
-            <Route
-              exact
-              path='/password-reset-request'
-              component={PasswordResetRequest}
-            />
-            <Route
-              exact
-              path='/reset-password/:token'
-              component={ResetPassword}
-            />
-          </Switch>
-        )}
+          <Route
+            exact
+            path='/password-reset-request'
+            component={PasswordResetRequest}
+          />
+          <Route
+            exact
+            path='/reset-password/:token'
+            component={ResetPassword}
+          />
+        </Switch>
+
         <Switch>
           <Route exact path='/register' component={null} />
 
