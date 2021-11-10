@@ -70,7 +70,12 @@ const Dashboard = ({ auth: { user } }) => {
           </Tab>
         </Tabs>
       </div>
-      {role === 'admin' && <Link to='/admin'>Admin Page</Link>}
+      {role === 'admin' && (
+        <div className='mt-2'>
+          {' '}
+          <Link to='/admin'>Admin Page</Link>
+        </div>
+      )}
     </Container>
   )
 }

@@ -30,13 +30,11 @@ import Admin from '../admin/Admin'
 const Routes = () => {
   const [windowHeight, setWindowHeight] = useState(0)
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const getWindowHeight = () => {
-        return window.innerHeight - 200
-      }
-
-      setWindowHeight(getWindowHeight())
+    const getWindowHeight = () => {
+      return window.innerHeight - 200
     }
+
+    setWindowHeight(getWindowHeight())
   }, [windowHeight, setWindowHeight])
 
   if (typeof window === 'undefined') return <></>
