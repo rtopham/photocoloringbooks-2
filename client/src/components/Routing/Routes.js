@@ -35,7 +35,7 @@ const Routes = () => {
 
   useEffect(() => {
     setWindowHeight(getWindowHeight())
-  }, [])
+  }, [windowHeight, setWindowHeight])
 
   return (
     <Fragment>
