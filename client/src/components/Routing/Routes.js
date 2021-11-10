@@ -28,86 +28,84 @@ import Contact from '../layout/Contact'
 import Admin from '../admin/Admin'
 
 const Routes = () => {
-  const getWindowHeight = () => {
-    return window.innerHeight - 200
-  }
-  const [windowHeight, setWindowHeight] = useState(getWindowHeight())
-
+  const [windowHeight, setWindowHeight] = useState(0)
   useEffect(() => {
-    if (typeof window !== 'undefined') setWindowHeight(getWindowHeight())
-  }, [window, windowHeight, setWindowHeight])
+    if (typeof window !== 'undefined') {
+      const getWindowHeight = () => {
+        return window.innerHeight - 200
+      }
 
-  if (typeof window !== 'undefined')
-    return (
-      <Fragment>
-        <Container style={{ minHeight: windowHeight }}>
-          <Switch>
-            <Route exact path='/' component={null} />
-            <Route exact path='/privacy-policy' component={null} />
-            <Route exact path='/terms-of-use' component={null} />
-            <Route exact path='/contact' component={null} />
-            <Route component={Alert} />
-          </Switch>
+      setWindowHeight(getWindowHeight())
+    }
+  }, [windowHeight, setWindowHeight])
 
-          <Switch>
-            {process.env.REACT_APP_NAV === 'true' && (
-              <Route exact path='/register' component={Register} />
-            )}
+  if (typeof window === 'undefined') return <></>
 
-            <Route exact path='/login' component={Login} />
+  return (
+    <Fragment>
+      <Container style={{ minHeight: windowHeight }}>
+        <Switch>
+          <Route exact path='/' component={null} />
+          <Route exact path='/privacy-policy' component={null} />
+          <Route exact path='/terms-of-use' component={null} />
+          <Route exact path='/contact' component={null} />
+          <Route component={Alert} />
+        </Switch>
 
-            <Route
-              exact
-              path='/password-reset-request'
-              component={PasswordResetRequest}
-            />
-            <Route
-              exact
-              path='/reset-password/:token'
-              component={ResetPassword}
-            />
-          </Switch>
+        <Switch>
+          {process.env.REACT_APP_NAV === 'true' && (
+            <Route exact path='/register' component={Register} />
+          )}
 
-          <Switch>
-            <Route exact path='/register' component={null} />
+          <Route exact path='/login' component={Login} />
 
-            <Route exact path='/login' component={null} />
-            <Route exact path='/' component={Landing} />
-            <Route exact path='/privacy-policy' component={PrivacyPolicy} />
-            <Route exact path='/terms-of-use' component={TermsOfUse} />
-            <Route exact path='/contact' component={Contact} />
+          <Route
+            exact
+            path='/password-reset-request'
+            component={PasswordResetRequest}
+          />
+          <Route
+            exact
+            path='/reset-password/:token'
+            component={ResetPassword}
+          />
+        </Switch>
 
-            <PrivateRoute exact path='/dashboard' component={Dashboard} />
-            <PrivateRoute exact path='/pages/:id' component={ViewPage} />
-            <PrivateRoute exact path='/pages' component={CreatePages} />
-            <PrivateRoute exact path='/gallery' component={Gallery} />
-            <PrivateRoute exact path='/books/create' component={CreateBook} />
-            <PrivateRoute exact path='/books/edit' component={EditBook} />
-            <PrivateRoute
-              exact
-              path='/books/cover'
-              component={CreateCoverPage}
-            />
-            <PrivateRoute
-              exact
-              path='/books/edit/cover'
-              component={EditCoverPage}
-            />
-            <PrivateRoute exact path='/books/preview' component={BookPreview} />
-            <PrivateRoute
-              exact
-              path='/books/edit/preview'
-              component={EditBookPreview}
-            />
-            <PrivateRoute exact path='/books' component={ColoringBooks} />
-            <AdminRoute exact path='/admin' component={Admin} />
-            <Route component={NotFound} />
-          </Switch>
-        </Container>
-        <Footer />
-      </Fragment>
-    )
-  return null
+        <Switch>
+          <Route exact path='/register' component={null} />
+
+          <Route exact path='/login' component={null} />
+          <Route exact path='/' component={Landing} />
+          <Route exact path='/privacy-policy' component={PrivacyPolicy} />
+          <Route exact path='/terms-of-use' component={TermsOfUse} />
+          <Route exact path='/contact' component={Contact} />
+
+          <PrivateRoute exact path='/dashboard' component={Dashboard} />
+          <PrivateRoute exact path='/pages/:id' component={ViewPage} />
+          <PrivateRoute exact path='/pages' component={CreatePages} />
+          <PrivateRoute exact path='/gallery' component={Gallery} />
+          <PrivateRoute exact path='/books/create' component={CreateBook} />
+          <PrivateRoute exact path='/books/edit' component={EditBook} />
+          <PrivateRoute exact path='/books/cover' component={CreateCoverPage} />
+          <PrivateRoute
+            exact
+            path='/books/edit/cover'
+            component={EditCoverPage}
+          />
+          <PrivateRoute exact path='/books/preview' component={BookPreview} />
+          <PrivateRoute
+            exact
+            path='/books/edit/preview'
+            component={EditBookPreview}
+          />
+          <PrivateRoute exact path='/books' component={ColoringBooks} />
+          <AdminRoute exact path='/admin' component={Admin} />
+          <Route component={NotFound} />
+        </Switch>
+      </Container>
+      <Footer />
+    </Fragment>
+  )
 }
 
 export default Routes
