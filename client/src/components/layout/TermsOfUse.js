@@ -41,7 +41,7 @@ const TermsOfUse = () => {
         books. The Service includes a free web app, which is free of charge and
         can be used anonymously without registration. Registered users may
         create and store up to six coloring book pages and create one coloring
-        book of up to six pages, which can be downloaded as a PDF file for
+        book of up to three pages, which can be downloaded as a PDF file for
         printing or sharing with other persons. Paid subscribers can store up to
         50 pages and create up to six coloring books of up to 50 pages.
       </p>

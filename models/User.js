@@ -27,13 +27,13 @@ const UserSchema = new mongoose.Schema({
   },
   galleryLimit: {
     type: Number,
-    default: 6
+    default: 3
   },
   stripeCustomerId: { type: String, default: null },
   stripeSubscriptionId: { type: String, default: null },
-  role:{
-    type:String,
-    default:'user'
+  role: {
+    type: String,
+    default: 'user'
   }
 })
 

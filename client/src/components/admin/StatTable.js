@@ -6,7 +6,7 @@ import StatRow from './StatRow'
 const StatTable = ({ tableData: { heading, dateInitiated, stats } }) => {
   return (
     <>
-      <h6>{heading}</h6>
+      <h6 className='text-info'>{heading}</h6>
       <Table className='statsTable' striped bordered hover>
         <thead>
           <tr>

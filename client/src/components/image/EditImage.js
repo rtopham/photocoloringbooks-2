@@ -198,7 +198,7 @@ EditImage.propTypes = {
   auth: PropTypes.object.isRequired,
   pages: PropTypes.object.isRequired,
   setSaving: PropTypes.func.isRequired,
-  recordLog: PropTypes.func.isRequired,
+  recordImageLoadStats: PropTypes.func.isRequired,
   setShowLimitModal: PropTypes.func
 }
 

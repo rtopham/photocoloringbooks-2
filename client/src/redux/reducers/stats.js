@@ -108,6 +108,10 @@ export default function (state = initialState, action) {
             {
               description: 'Books Saved',
               amount: countAmount(statArray, 'books-saved')
+            },
+            {
+              description: 'PDFs Created',
+              amount: countAmount(statArray, 'pdfs-created')
             }
           ]
         }
@@ -182,8 +186,7 @@ export default function (state = initialState, action) {
       }
     case CLEAR_STATS:
       return {
-        ...state,
-        stats: null
+        ...initialState
       }
 
     default:

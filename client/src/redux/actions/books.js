@@ -19,11 +19,12 @@ import {
 } from './types'
 
 import { setAlert } from './alert'
-import { recordBookSaveStats } from './stats'
+import { recordBookSaveStats, recordPDFStats } from './stats'
 
 //Print PDF
 
 export const printPDF = () => (dispatch) => {
+  dispatch(recordPDFStats())
   dispatch({ type: PRINT_PDF })
   dispatch(setAlert('Generating PDF. . .Please wait.', 'success'))
 }

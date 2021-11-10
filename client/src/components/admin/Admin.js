@@ -22,6 +22,7 @@ const Admin = ({ stats: { stats, allTimeStats, statTables }, loadStats }) => {
 
   return (
     <>
+      <h1 className='large text-primary'>Admin Stats</h1>
       {statTables.map((statTable, i) => {
         return <StatTable tableData={statTable} key={i} />
       })}

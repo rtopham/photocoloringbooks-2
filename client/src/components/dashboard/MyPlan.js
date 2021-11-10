@@ -149,12 +149,12 @@ const MyPlan = ({ stripe: { subscription } }) => {
               </tr>
               <tr>
                 <td>Gallery Storage</td>
-                <td>Up to 6 pages.</td>
+                <td>Up to three pages.</td>
                 <td>Up to 50 pages.</td>
               </tr>
               <tr>
                 <td>Books</td>
-                <td>One book with up to six pages.</td>
+                <td>One book with up to three pages.</td>
                 <td>Up to six books with up to 50 pages.</td>
               </tr>
               <tr>

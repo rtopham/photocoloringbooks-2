@@ -27,7 +27,7 @@ import {
   OPEN_ACCOUNT_DELETE_MODAL,
   CLOSE_ACCOUNT_DELETE_MODAL
 } from './types'
-import { recordLoginStats, recordSignUpStats } from './stats'
+import { recordLoginStats, recordSignUpStats, clearStats } from './stats'
 
 // Set Loading
 
@@ -120,6 +120,7 @@ export const logout = () => (dispatch) => {
   dispatch(clearStripeData())
   dispatch(clearBooks())
   dispatch(clearPages())
+  dispatch(clearStats())
 }
 // Update User
 

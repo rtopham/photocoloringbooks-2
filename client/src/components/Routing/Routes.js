@@ -28,9 +28,12 @@ import Contact from '../layout/Contact'
 import Admin from '../admin/Admin'
 
 const Routes = () => {
+  const getWindowHeight = () => {
+    return window.innerHeight - 200
+  }
   return (
     <Fragment>
-      <Container style={{ minHeight: window.innerHeight - 200 }}>
+      <Container style={{ minHeight: getWindowHeight() }}>
         <Switch>
           <Route exact path='/' component={null} />
           <Route exact path='/privacy-policy' component={null} />

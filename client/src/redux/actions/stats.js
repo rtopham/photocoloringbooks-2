@@ -1,11 +1,9 @@
 import api from '../../utils/api'
 import { setAlert } from './alert'
 
-import { STATS_LOADED } from './types'
+import { STATS_LOADED, CLEAR_STATS } from './types'
 
-//recordImageLoadStats
-
-export const recordImageLoadStats = () => async (dispatch) => {
+const getDateString = () => {
   const date = new Date()
   const dateString =
     '-' +
@@ -14,6 +12,13 @@ export const recordImageLoadStats = () => async (dispatch) => {
     date.getDate() +
     '-' +
     date.getFullYear()
+  return dateString
+}
+
+//recordImageLoadStats
+
+export const recordImageLoadStats = () => async (dispatch) => {
+  const dateString = getDateString()
   try {
     await api.put('/all-time-stats', {
       type: 'images-loaded-all-time',
@@ -23,16 +28,10 @@ export const recordImageLoadStats = () => async (dispatch) => {
       type: 'images-loaded' + dateString,
       description: 'Images Loaded'
     })
-
-    //      dispatch({ type: SAVE_PAGE, payload: res.data })
-    //      dispatch(setAlert('Page Saved to Gallery', 'success'))
-    //      dispatch(loadGallery())
   } catch (err) {
     const errors = err.response.data.errors
 
     if (errors) {
-      //errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')))
-      console.log('error in try catch')
       errors.forEach((error) => console.log(error.msg))
     }
   }
@@ -40,14 +39,7 @@ export const recordImageLoadStats = () => async (dispatch) => {
 //recordLoginStats
 
 export const recordLoginStats = () => async (dispatch) => {
-  const date = new Date()
-  const dateString =
-    '-' +
-    (date.getMonth() + 1) +
-    '-' +
-    date.getDate() +
-    '-' +
-    date.getFullYear()
+  const dateString = getDateString()
   try {
     await api.put('/all-time-stats', {
       type: 'logins-all-time',
@@ -61,8 +53,6 @@ export const recordLoginStats = () => async (dispatch) => {
     const errors = err.response.data.errors
 
     if (errors) {
-      //errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')))
-      console.log('error in try catch')
       errors.forEach((error) => console.log(error.msg))
     }
   }
@@ -70,14 +60,7 @@ export const recordLoginStats = () => async (dispatch) => {
 //recordSignUpStats
 
 export const recordSignUpStats = () => async (dispatch) => {
-  const date = new Date()
-  const dateString =
-    '-' +
-    (date.getMonth() + 1) +
-    '-' +
-    date.getDate() +
-    '-' +
-    date.getFullYear()
+  const dateString = getDateString()
   try {
     await api.put('/all-time-stats', {
       type: 'signups-all-time',
@@ -91,8 +74,6 @@ export const recordSignUpStats = () => async (dispatch) => {
     const errors = err.response.data.errors
 
     if (errors) {
-      //errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')))
-      console.log('error in try catch')
       errors.forEach((error) => console.log(error.msg))
     }
   }
@@ -100,14 +81,7 @@ export const recordSignUpStats = () => async (dispatch) => {
 //recordPageSaveStats
 
 export const recordPageSaveStats = () => async (dispatch) => {
-  const date = new Date()
-  const dateString =
-    '-' +
-    (date.getMonth() + 1) +
-    '-' +
-    date.getDate() +
-    '-' +
-    date.getFullYear()
+  const dateString = getDateString()
   try {
     await api.put('/all-time-stats', {
       type: 'pages-saved-all-time',
@@ -121,8 +95,6 @@ export const recordPageSaveStats = () => async (dispatch) => {
     const errors = err.response.data.errors
 
     if (errors) {
-      //errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')))
-      console.log('error in try catch')
       errors.forEach((error) => console.log(error.msg))
     }
   }
@@ -130,14 +102,7 @@ export const recordPageSaveStats = () => async (dispatch) => {
 //recordBooksSaveStats
 
 export const recordBookSaveStats = () => async (dispatch) => {
-  const date = new Date()
-  const dateString =
-    '-' +
-    (date.getMonth() + 1) +
-    '-' +
-    date.getDate() +
-    '-' +
-    date.getFullYear()
+  const dateString = getDateString()
   try {
     await api.put('/all-time-stats', {
       type: 'books-saved-all-time',
@@ -151,8 +116,28 @@ export const recordBookSaveStats = () => async (dispatch) => {
     const errors = err.response.data.errors
 
     if (errors) {
-      //errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')))
-      console.log('error in try catch')
+      errors.forEach((error) => console.log(error.msg))
+    }
+  }
+}
+//recordPDFStats
+
+export const recordPDFStats = () => async (dispatch) => {
+  const dateString = getDateString()
+
+  try {
+    await api.put('/all-time-stats', {
+      type: 'pdfs-created-all-time',
+      description: 'PDFs Created'
+    })
+    await api.put('/stats', {
+      type: 'pdfs-created' + dateString,
+      description: 'PDFs Created'
+    })
+  } catch (err) {
+    const errors = err.response.data.errors
+
+    if (errors) {
       errors.forEach((error) => console.log(error.msg))
     }
   }
@@ -180,4 +165,10 @@ export const loadStats = () => async (dispatch) => {
       errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')))
     }
   }
+}
+
+//Clear Stats
+
+export const clearStats = () => (dispatch) => {
+  dispatch({ type: CLEAR_STATS })
 }
