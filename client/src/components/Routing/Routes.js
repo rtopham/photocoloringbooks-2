@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import { Container } from 'react-bootstrap'
 import { Route, Switch } from 'react-router-dom'
 import PrivateRoute from './PrivateRoute'
@@ -31,9 +31,15 @@ const Routes = () => {
   const getWindowHeight = () => {
     return window.innerHeight - 200
   }
+  const [windowHeight, setWindowHeight] = useState(getWindowHeight())
+
+  useEffect(() => {
+    setWindowHeight(getWindowHeight())
+  }, [])
+
   return (
     <Fragment>
-      <Container style={{ minHeight: getWindowHeight() }}>
+      <Container style={{ minHeight: windowHeight }}>
         <Switch>
           <Route exact path='/' component={null} />
           <Route exact path='/privacy-policy' component={null} />
