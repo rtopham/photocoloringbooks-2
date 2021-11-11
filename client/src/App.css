@@ -70,8 +70,4 @@ div.container {
   body {
     padding-top: 220px;
   }
-
-  .mainContainer {
-    min-height: 0px;
-  }
 }
