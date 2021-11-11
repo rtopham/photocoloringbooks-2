@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { Container } from 'react-bootstrap'
 import { Route, Switch } from 'react-router-dom'
 import PrivateRoute from './PrivateRoute'
@@ -29,7 +29,7 @@ import Admin from '../admin/Admin'
 
 const Routes = () => {
   return (
-    <Fragment>
+    <>
       <Container className='mainContainer'>
         <Switch>
           <Route exact path='/' component={null} />
@@ -91,7 +91,7 @@ const Routes = () => {
         </Switch>
       </Container>
       <Footer />
-    </Fragment>
+    </>
   )
 }
 
