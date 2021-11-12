@@ -52,7 +52,7 @@ div.container {
   width: 33%;
 }
 
-* {
+/* * {
   box-sizing: border-box;
 }
 
@@ -66,16 +66,26 @@ body {
   height: 100%;
   position: relative;
 }
+
 .contentContainer {
-  min-height: 86vh;
+  min-height: 100vh;
   overflow: hidden;
   display: block;
   position: relative;
-  padding-bottom: 0px;
+  padding-bottom: 250px;
+} */
+
+.page-container {
+  position: relative;
+  min-height: 93vh;
+}
+
+.content-wrap {
+  padding-bottom: 50px;
 }
 
 .footerPin {
-  position: relative;
+  position: absolute;
   bottom: 0;
   width: 100%;
 }
