@@ -67,7 +67,7 @@ body {
   position: relative;
 }
 .contentContainer {
-  min-height: calc(100vh - 180px);
+  min-height: 86vh;
   overflow: hidden;
   display: block;
   position: relative;
