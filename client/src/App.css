@@ -19,6 +19,7 @@
 
 div.container {
   max-width: 1010px;
+  height: 100%;
 }
 
 .galleryImageThumb {
@@ -52,51 +53,17 @@ div.container {
   width: 33%;
 }
 
-/* * {
-  box-sizing: border-box;
-}
-
-*:before,
-*:after {
-  box-sizing: border-box;
-}
-
-html,
-body {
-  height: 100%;
-  position: relative;
-}
-
-.contentContainer {
-  min-height: 100vh;
-  overflow: hidden;
-  display: block;
-  position: relative;
-  padding-bottom: 250px;
-} */
-
-.page-container {
-  position: relative;
-  min-height: 93vh !important;
-}
-
-.content-wrap {
-  padding-bottom: 50px;
-}
-
-.footerPin {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-}
-
 @media screen and (min-width: 600px) {
   .authForms {
     max-width: 40%;
   }
-
+  html,
   body {
     padding-top: 80px;
+    height: 100%;
+  }
+  #root {
+    height: 90%;
   }
 }
 

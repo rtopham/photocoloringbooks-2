@@ -47,12 +47,8 @@ const App = () => {
     <Elements stripe={stripePromise}>
       <Provider store={store}>
         <Router>
-          <div className='page-container'>
-            <div className='content-wrap'>
-              <MainNavbar />
-              <Route component={Routes} />
-            </div>
-          </div>
+          <MainNavbar />
+          <Route component={Routes} />
         </Router>
       </Provider>
     </Elements>
