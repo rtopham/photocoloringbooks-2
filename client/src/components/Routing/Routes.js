@@ -27,13 +27,11 @@ import Landing from '../layout/Landing'
 import Contact from '../layout/Contact'
 import Admin from '../admin/Admin'
 
-import '../../App.css'
-
 const Routes = () => {
   return (
     <>
       <Container>
-        <div className='heightFix'>
+        <div className='contentContainer'>
           <Switch>
             <Route exact path='/' component={null} />
             <Route exact path='/privacy-policy' component={null} />

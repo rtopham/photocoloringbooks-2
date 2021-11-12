@@ -52,8 +52,14 @@ div.container {
   width: 33%;
 }
 
-.heightFix {
-  height: 1080px;
+.contentContainer {
+  min-height: calc(100vh - 200px);
+}
+
+.footerPin {
+  position: relative;
+  left: 0;
+  bottom: 0;
 }
 
 @media screen and (min-width: 600px) {

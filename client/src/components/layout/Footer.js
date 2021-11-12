@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 const Footer = () => {
   return (
-    <div className='mt-5 p-2 bg-dark text-light'>
+    <footer className='mt-5 p-2 bg-dark text-light footerPin'>
       <div className='text-center'>
         <Image src='/favicon.ico' /> &copy; {new Date().getFullYear()}{' '}
         Singletrack Ventures, LLC ·{' '}
@@ -12,7 +12,7 @@ const Footer = () => {
         <Link to='/terms-of-use'>Terms of Use </Link>·{' '}
         <Link to='/contact'>Contact Us</Link>
       </div>
-    </div>
+    </footer>
   )
 }
 
