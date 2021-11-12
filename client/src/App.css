@@ -67,15 +67,15 @@ body {
   position: relative;
 }
 .contentContainer {
-  min-height: 100vh;
+  min-height: calc(100vh - 180px);
   overflow: hidden;
   display: block;
   position: relative;
-  padding-bottom: 200px;
+  padding-bottom: 0px;
 }
 
 .footerPin {
-  position: absolute;
+  position: relative;
   bottom: 0;
   width: 100%;
 }
