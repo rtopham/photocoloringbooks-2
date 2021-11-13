@@ -7,6 +7,11 @@
   min-height: 66px;
 }
 
+.contentDiv {
+  min-height: 1080px;
+  /* background-color: palegreen; */
+}
+
 .ad {
   border: solid blue;
   min-height: 88px;
@@ -20,11 +25,6 @@
 div.container {
   max-width: 1010px;
   /* background-color: lightcoral; */
-}
-
-.contentDiv {
-  min-height: 1080px;
-  /* background-color: palegreen; */
 }
 
 .galleryImageThumb {

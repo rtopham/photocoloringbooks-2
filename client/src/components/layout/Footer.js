@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 const Footer = () => {
   return (
-    <footer className='mt-auto p-2 bg-dark text-light footerPin'>
+    <footer className='mt-2 p-2 bg-dark text-light footerPin'>
       <div className='text-center'>
         <Image src='/favicon.ico' /> &copy; {new Date().getFullYear()}{' '}
         Singletrack Ventures, LLC ·{' '}
