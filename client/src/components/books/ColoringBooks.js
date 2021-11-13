@@ -15,7 +15,7 @@ const ColoringBooks = ({
   stripe: { subscription }
 }) => {
   return (
-    <div className='container'>
+    <div className='contentDiv'>
       <GoogleAd />
 
       <NewBookHeader

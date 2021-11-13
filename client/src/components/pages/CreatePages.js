@@ -12,7 +12,7 @@ const Create = () => {
   const [resetAfterSave, setResetAfterSave] = useState(false)
 
   return (
-    <div className='container'>
+    <div className='contentDiv'>
       <GoogleAd />
       <h1 className='d-inline text-primary'>Create Pages</h1>{' '}
       <EditImage

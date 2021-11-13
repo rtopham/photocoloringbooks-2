@@ -22,10 +22,9 @@ div.container {
   /* background-color: lightcoral; */
 }
 
-div.content-container {
-  /* background-color: palegreen; */
-  margin-bottom: 25px;
+.contentDiv {
   min-height: 1080px;
+  /* background-color: palegreen; */
 }
 
 .galleryImageThumb {

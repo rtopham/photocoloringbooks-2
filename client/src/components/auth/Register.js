@@ -55,90 +55,92 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
   }
 
   return (
-    <Container fluid className='authForms'>
-      <Card border='dark' text='dark'>
-        <Card.Header>
-          <h1>
-            <span>
-              <i className='fas fa-user' /> Register
-            </span>
-          </h1>
-        </Card.Header>
-        <Card.Body>
-          <Form onSubmit={onSubmit}>
-            <FormGroup>
-              <FormLabel>Name</FormLabel>
-              <FormControl
-                type='text'
-                name='name'
-                isValid={validateInputLength(name, 2) === 'success'}
-                isInvalid={validateInputLength(name, 2) === 'error'}
-                value={name}
-                onChange={onChange}
-                required
-              />
-            </FormGroup>
-            <FormGroup>
-              <FormLabel>Email Address</FormLabel>
-              <FormControl
-                type='email'
-                name='email'
-                value={email}
-                isValid={validateEmail(email) === 'success'}
-                isInvalid={validateEmail(email) === 'error'}
-                onChange={onChange}
-                required
-                minLength='6'
-              />
-            </FormGroup>
-            <FormGroup>
-              <FormLabel>Password</FormLabel>
-              <FormControl
-                type='password'
-                name='password'
-                value={password}
-                isValid={validatePassword(password) === 'success'}
-                isInvalid={validatePassword(password) === 'error'}
-                onChange={onChange}
-                required
-                minLength='6'
-              />
-              <span className='font-italic'>
-                Password must contain at least eight characters, one uppercase
-                letter, one lowercase letter and one number. Special characters
-                are allowed.
+    <div className='contentDiv'>
+      <Container fluid className='authForms'>
+        <Card border='dark' text='dark'>
+          <Card.Header>
+            <h1>
+              <span>
+                <i className='fas fa-user' /> Register
               </span>
-            </FormGroup>
-            <FormGroup className='form-group'>
-              <FormLabel htmlFor='password2'>Confirm Password</FormLabel>
-              <FormControl
-                type='password'
-                name='password2'
-                value={password2}
-                isValid={
-                  validateConfirmPassword(password, password2) === 'success'
-                }
-                isInvalid={
-                  validateConfirmPassword(password, password2) === 'error'
-                }
-                onChange={onChange}
-                required
+            </h1>
+          </Card.Header>
+          <Card.Body>
+            <Form onSubmit={onSubmit}>
+              <FormGroup>
+                <FormLabel>Name</FormLabel>
+                <FormControl
+                  type='text'
+                  name='name'
+                  isValid={validateInputLength(name, 2) === 'success'}
+                  isInvalid={validateInputLength(name, 2) === 'error'}
+                  value={name}
+                  onChange={onChange}
+                  required
+                />
+              </FormGroup>
+              <FormGroup>
+                <FormLabel>Email Address</FormLabel>
+                <FormControl
+                  type='email'
+                  name='email'
+                  value={email}
+                  isValid={validateEmail(email) === 'success'}
+                  isInvalid={validateEmail(email) === 'error'}
+                  onChange={onChange}
+                  required
+                  minLength='6'
+                />
+              </FormGroup>
+              <FormGroup>
+                <FormLabel>Password</FormLabel>
+                <FormControl
+                  type='password'
+                  name='password'
+                  value={password}
+                  isValid={validatePassword(password) === 'success'}
+                  isInvalid={validatePassword(password) === 'error'}
+                  onChange={onChange}
+                  required
+                  minLength='6'
+                />
+                <span className='font-italic'>
+                  Password must contain at least eight characters, one uppercase
+                  letter, one lowercase letter and one number. Special
+                  characters are allowed.
+                </span>
+              </FormGroup>
+              <FormGroup className='form-group'>
+                <FormLabel htmlFor='password2'>Confirm Password</FormLabel>
+                <FormControl
+                  type='password'
+                  name='password2'
+                  value={password2}
+                  isValid={
+                    validateConfirmPassword(password, password2) === 'success'
+                  }
+                  isInvalid={
+                    validateConfirmPassword(password, password2) === 'error'
+                  }
+                  onChange={onChange}
+                  required
+                />
+              </FormGroup>
+              <input
+                type='submit'
+                value='Register'
+                disabled={!validateForm()}
+                className='btn btn-dark btn-block'
               />
-            </FormGroup>
-            <input
-              type='submit'
-              value='Register'
-              disabled={!validateForm()}
-              className='btn btn-dark btn-block'
-            />
-          </Form>
-          <p></p>
-          <p className='text-center'>
-            Already have an account? <Link to='/login'>Sign In</Link>
-          </p>
-        </Card.Body>
-      </Card>
-    </Container>
+            </Form>
+            <p></p>
+            <p className='text-center'>
+              Already have an account? <Link to='/login'>Sign In</Link>
+            </p>
+          </Card.Body>
+        </Card>
+      </Container>
+    </div>
   )
 }
 

@@ -22,7 +22,7 @@ const Dashboard = ({ auth: { user } }) => {
   const { avatar, name, email, date, _id, role } = user
 
   return (
-    <Container>
+    <div className='contentDiv'>
       <GoogleAd />
       <h1 className='large text-primary'>Dashboard</h1>
       <p className='lead'>
@@ -76,7 +76,7 @@ const Dashboard = ({ auth: { user } }) => {
           <Link to='/admin'>Admin Page</Link>
         </div>
       )}
-    </Container>
+    </div>
   )
 }
 

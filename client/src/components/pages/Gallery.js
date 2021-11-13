@@ -21,7 +21,7 @@ const Gallery = ({
 
   if (gallery && gallery.length === 0)
     return (
-      <div className='container'>
+      <div className='contentDiv'>
         <GoogleAd />
         <div className='mb-4'>
           <h1 className='d-inline text-primary'>Gallery</h1>{' '}
@@ -37,7 +37,7 @@ const Gallery = ({
     )
 
   return (
-    <div className=''>
+    <div className='contentDiv'>
       <GoogleAd />
       <div className='mb-4'>
         <h1 className='d-inline text-primary'>Gallery</h1>{' '}
