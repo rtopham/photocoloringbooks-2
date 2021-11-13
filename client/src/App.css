@@ -24,6 +24,8 @@ div.container {
 
 div.content-container {
   /* background-color: palegreen; */
+  margin-bottom: 25px;
+  min-height: 1080px;
 }
 
 .galleryImageThumb {
@@ -55,19 +57,6 @@ div.content-container {
 
 .statsTable td {
   width: 33%;
-}
-
-#root {
-  /* background-color: lightblue; */
-  position: relative;
-  min-height: 92vh;
-}
-
-.footerPin {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 48px; /* Footer height */
 }
 
 @media screen and (min-width: 600px) {
