@@ -19,7 +19,11 @@
 
 div.container {
   max-width: 1010px;
-  height: 100%;
+  /* background-color: lightcoral; */
+}
+
+div.content-container {
+  /* background-color: palegreen; */
 }
 
 .galleryImageThumb {
@@ -53,21 +57,26 @@ div.container {
   width: 33%;
 }
 
+#root {
+  /* background-color: lightblue; */
+  position: relative;
+  min-height: 92vh;
+}
+
+.footerPin {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 48px; /* Footer height */
+}
+
 @media screen and (min-width: 600px) {
   .authForms {
     max-width: 40%;
+    /* background-color: pink; */
   }
-
-  html {
-    height: 100%;
-  }
-
   body {
     padding-top: 80px;
-    height: 100%;
-  }
-  #root {
-    height: 90%;
   }
 }
 

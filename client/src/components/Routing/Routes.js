@@ -30,7 +30,7 @@ import Admin from '../admin/Admin'
 const Routes = () => {
   return (
     <>
-      <Container>
+      <Container className='content-container'>
         <Switch>
           <Route exact path='/' component={null} />
           <Route exact path='/privacy-policy' component={null} />

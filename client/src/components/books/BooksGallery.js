@@ -15,7 +15,7 @@ const BooksGallery = ({
   let pdfDisabled = false
   if (subscription && subscription.status === 'canceled') pdfDisabled = true
   return (
-    <div className=''>
+    <div className='content-container'>
       <CardColumns>
         {books.map((book) => {
           return (

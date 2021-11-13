@@ -37,7 +37,7 @@ const Gallery = ({
     )
 
   return (
-    <div className='container'>
+    <div className='content-container'>
       <GoogleAd />
       <div className='mb-4'>
         <h1 className='d-inline text-primary'>Gallery</h1>{' '}
