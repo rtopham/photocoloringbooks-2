@@ -11,7 +11,7 @@ const GoogleAd = ({ stripe: { subscription }, setDivClass, show }) => {
       process.env.REACT_APP_MODE !== 'development'
     )
       (window.adsbygoogle = window.adsbygoogle || []).push({})
-  }, [])
+  }, [show])
 
   useEffect(() => {
     if (show === false || (subscription && subscription.status === 'active'))
