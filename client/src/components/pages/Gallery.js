@@ -6,7 +6,6 @@ import PageFilter from '../pages/PageFilter'
 import GalleryImages from '../pages/GalleryImages'
 import GalleryUpgradeNotice from '../pages/GalleryUpgradeNotice'
 import GalleryFullNotice from '../pages/GalleryFullNotice'
-import GoogleAd from '../layout/GoogleAd'
 import PropTypes from 'prop-types'
 
 const Gallery = ({
@@ -36,8 +35,7 @@ const Gallery = ({
     )
 
   return (
-    <div className='contentDiv'>
-      <GoogleAd />
+    <div>
       <div className='mb-4'>
         <h1 className='d-inline text-primary'>Gallery</h1>{' '}
       </div>

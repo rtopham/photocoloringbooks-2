@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { clearFilter } from '../../redux/actions/pages'
 import BooksGallery from './BooksGallery'
 import NewBookHeader from './NewBookHeader'
-import GoogleAd from '../layout/GoogleAd'
 import BooksGalleryRenewalNotice from './BooksGalleryRenewalNotice'
 import PropTypes from 'prop-types'
 
@@ -16,8 +15,6 @@ const ColoringBooks = ({
 }) => {
   return (
     <div className='contentDiv'>
-      <GoogleAd />
-
       <NewBookHeader
         className='mb-4'
         heading='My Books'
