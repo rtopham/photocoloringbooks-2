@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import {
-  Container,
   Card,
   ListGroup,
   ListGroupItem,
@@ -16,14 +15,12 @@ import EditPassword from './EditPassword'
 import DeleteAccount from './DeleteAccount'
 import MyPlan from './MyPlan'
 import PropTypes from 'prop-types'
-import GoogleAd from '../layout/GoogleAd'
 
 const Dashboard = ({ auth: { user } }) => {
   const { avatar, name, email, date, _id, role } = user
 
   return (
-    <div className='contentDiv'>
-      <GoogleAd />
+    <div>
       <h1 className='large text-primary'>Dashboard</h1>
       <p className='lead'>
         <i className='fas fa-user'></i> {user && user.name}

@@ -21,8 +21,7 @@ const Gallery = ({
 
   if (gallery && gallery.length === 0)
     return (
-      <div className='contentDiv'>
-        <GoogleAd />
+      <div>
         <div className='mb-4'>
           <h1 className='d-inline text-primary'>Gallery</h1>{' '}
         </div>

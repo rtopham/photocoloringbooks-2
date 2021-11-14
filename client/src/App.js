@@ -1,6 +1,5 @@
 //React and Components
 import React, { useEffect } from 'react'
-import MainNavbar from './components/layout/MainNavbar'
 import Routes from './components/Routing/Routes'
 
 // Stripe.js Components
