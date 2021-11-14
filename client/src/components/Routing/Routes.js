@@ -56,7 +56,9 @@ const Routes = () => {
           {/* <Route component={GoogleAd} /> */}
           <Route
             render={(props) => {
-              return <GoogleAd setDivClass={setDivClass} {...props} />
+              return (
+                <GoogleAd setDivClass={setDivClass} show={true} {...props} />
+              )
             }}
           />
         </Switch>
