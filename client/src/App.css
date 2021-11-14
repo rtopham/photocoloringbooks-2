@@ -15,6 +15,10 @@
 }
 
 .contentDivAds {
+  min-height: 790px;
+}
+
+.contentDivAdsDev {
   min-height: 980px;
 }
 

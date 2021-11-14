@@ -21,6 +21,8 @@ const GoogleAd = ({ stripe: { subscription }, setDivClass, show }) => {
       (subscription && subscription.status !== 'active')
     )
       setDivClass('contentDivAds')
+    if (process.env.REACT_APP_MODE === 'development')
+      setDivClass('contentDivAdsDev')
   }, [show, subscription, setDivClass])
 
   let adContent = (
