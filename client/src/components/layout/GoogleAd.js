@@ -13,7 +13,7 @@ const GoogleAd = ({ stripe: { subscription } }) => {
   }, [])
 
   let adContent = (
-    <div className=' mb-4'>
+    <div className='mb-4'>
       <Image
         fluid
         src='https://storage.googleapis.com/support-kms-prod/SNP_59D432450939ECC60A21BEDBEE985B1817B1_3094744_en_v2'
@@ -21,7 +21,7 @@ const GoogleAd = ({ stripe: { subscription } }) => {
     </div>
   )
 
-  if (process.env.REACT_APP_ADS)
+  if (process.env.REACT_APP_ADS && process.env.REACT_APP_MODE !== 'development')
     adContent = (
       <div className=''>
         <ins

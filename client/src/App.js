@@ -47,7 +47,6 @@ const App = () => {
     <Elements stripe={stripePromise}>
       <Provider store={store}>
         <Router>
-          <MainNavbar />
           <Route component={Routes} />
         </Router>
       </Provider>

@@ -8,7 +8,9 @@ import Register from '../auth/Register'
 import Login from '../auth/Login'
 import PasswordResetRequest from '../auth/PasswordResetRequest'
 import ResetPassword from '../auth/ResetPassword'
+import MainNavbar from '../layout/MainNavbar'
 import Alert from '../layout/Alert'
+import GoogleAd from '../layout/GoogleAd'
 import Dashboard from '../dashboard/Dashboard'
 import CreatePages from '../pages/CreatePages'
 import Gallery from '../pages/Gallery'
@@ -30,15 +32,23 @@ import Admin from '../admin/Admin'
 const Routes = () => {
   return (
     <>
-      <Container className='content-container'>
+      <MainNavbar />
+      <Container>
+        {/* <Route component={Alert} /> */}
+        <Alert />
+      </Container>
+      <Container>
         <Switch>
-          <Route exact path='/' component={null} />
-          <Route exact path='/privacy-policy' component={null} />
-          <Route exact path='/terms-of-use' component={null} />
-          <Route exact path='/contact' component={null} />
-          <Route component={Alert} />
-        </Switch>
+          <Route exact path='/register' component={null} />
 
+          <Route exact path='/login' component={null} />
+          <Route exact path='/password-reset-request' component={null} />
+          <Route exact path='/reset-password/:token' component={null} />
+          <Route component={GoogleAd} />
+        </Switch>
+      </Container>
+
+      <Container>
         <Switch>
           {process.env.REACT_APP_NAV === 'true' && (
             <Route exact path='/register' component={Register} />
@@ -62,6 +72,8 @@ const Routes = () => {
           <Route exact path='/register' component={null} />
 
           <Route exact path='/login' component={null} />
+          <Route exact path='/password-reset-request' component={null} />
+          <Route exact path='/reset-password/:token' component={null} />
           <Route exact path='/' component={Landing} />
           <Route exact path='/privacy-policy' component={PrivacyPolicy} />
           <Route exact path='/terms-of-use' component={TermsOfUse} />

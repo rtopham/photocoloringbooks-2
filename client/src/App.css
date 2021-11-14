@@ -23,7 +23,7 @@
 }
 
 div.container {
-  /* max-width: 1010px; */
+  max-width: 1010px;
   /* background-color: lightcoral; */
 }
 
@@ -64,7 +64,7 @@ div.container {
     /* background-color: pink; */
   }
   body {
-    padding-top: 80px;
+    padding-top: 66px;
   }
 }
 

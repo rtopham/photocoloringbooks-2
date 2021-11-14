@@ -41,10 +41,10 @@ const PasswordResetRequest = ({ requestPasswordReset, isAuthenticated }) => {
 
   return (
     <Container className='w-50'>
-      <Card>
+      <Card border='dark' text='dark'>
         <Card.Header>
           <h1>
-            <span className='text-primary'>
+            <span>
               <i className='fas fa-user' /> Reset Password
             </span>
           </h1>
@@ -73,7 +73,7 @@ const PasswordResetRequest = ({ requestPasswordReset, isAuthenticated }) => {
               type='submit'
               value='Send Email'
               disabled={!validateForm()}
-              className='btn btn-primary btn-block'
+              className='btn btn-dark btn-block'
             />
           </Form>
           <p></p>
