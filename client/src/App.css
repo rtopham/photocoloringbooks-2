@@ -8,8 +8,19 @@
 }
 
 .contentDiv {
-  min-height: 950px;
+  /*  min-height: calc(100vh - 190px); */
+  /* min-height: calc(100vh - 320px); */
   /* background-color: palegreen; */
+}
+
+.mainWrap {
+  min-height: calc(100vh - 123px);
+}
+
+.footerPin {
+  position: relative;
+  left: 0;
+  bottom: 0;
 }
 
 .ad {
