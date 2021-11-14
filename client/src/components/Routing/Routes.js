@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Container } from 'react-bootstrap'
 import { Route, Switch } from 'react-router-dom'
 import PrivateRoute from './PrivateRoute'
@@ -30,90 +30,98 @@ import Contact from '../layout/Contact'
 import Admin from '../admin/Admin'
 
 const Routes = () => {
+  const [divClass, setDivClass] = useState('contentDiv')
   return (
     <>
-      <div className='mainWrap'>
-        <MainNavbar />
-        <Container>
-          {/* <Route component={Alert} /> */}
-          <Alert />
-        </Container>
-        <Container>
+      <MainNavbar />
+      <Container>
+        {/* <Route component={Alert} /> */}
+        <Alert />
+      </Container>
+      <Container>
+        <Switch>
+          <Route exact path='/register' component={null} />
+
+          <Route
+            exact
+            path='/login'
+            render={(props) => {
+              return (
+                <GoogleAd setDivClass={setDivClass} show={false} {...props} />
+              )
+            }}
+          />
+          <Route exact path='/password-reset-request' component={null} />
+          <Route exact path='/reset-password/:token' component={null} />
+          {/* <Route component={GoogleAd} /> */}
+          <Route
+            render={(props) => {
+              return <GoogleAd setDivClass={setDivClass} {...props} />
+            }}
+          />
+        </Switch>
+      </Container>
+
+      <Container>
+        <div className={divClass}>
+          <Switch>
+            {process.env.REACT_APP_NAV === 'true' && (
+              <Route exact path='/register' component={Register} />
+            )}
+
+            <Route exact path='/login' component={Login} />
+
+            <Route
+              exact
+              path='/password-reset-request'
+              component={PasswordResetRequest}
+            />
+            <Route
+              exact
+              path='/reset-password/:token'
+              component={ResetPassword}
+            />
+          </Switch>
+
           <Switch>
             <Route exact path='/register' component={null} />
 
             <Route exact path='/login' component={null} />
             <Route exact path='/password-reset-request' component={null} />
             <Route exact path='/reset-password/:token' component={null} />
-            <Route component={GoogleAd} />
+            <Route exact path='/' component={Landing} />
+            <Route exact path='/privacy-policy' component={PrivacyPolicy} />
+            <Route exact path='/terms-of-use' component={TermsOfUse} />
+            <Route exact path='/contact' component={Contact} />
+
+            <PrivateRoute exact path='/dashboard' component={Dashboard} />
+            <PrivateRoute exact path='/pages/:id' component={ViewPage} />
+            <PrivateRoute exact path='/pages' component={CreatePages} />
+            <PrivateRoute exact path='/gallery' component={Gallery} />
+            <PrivateRoute exact path='/books/create' component={CreateBook} />
+            <PrivateRoute exact path='/books/edit' component={EditBook} />
+            <PrivateRoute
+              exact
+              path='/books/cover'
+              component={CreateCoverPage}
+            />
+            <PrivateRoute
+              exact
+              path='/books/edit/cover'
+              component={EditCoverPage}
+            />
+            <PrivateRoute exact path='/books/preview' component={BookPreview} />
+            <PrivateRoute
+              exact
+              path='/books/edit/preview'
+              component={EditBookPreview}
+            />
+            <PrivateRoute exact path='/books' component={ColoringBooks} />
+            <AdminRoute exact path='/admin' component={Admin} />
+            <Route component={NotFound} />
           </Switch>
-        </Container>
-
-        <Container>
-          <div className='contentDiv'>
-            <Switch>
-              {process.env.REACT_APP_NAV === 'true' && (
-                <Route exact path='/register' component={Register} />
-              )}
-
-              <Route exact path='/login' component={Login} />
-
-              <Route
-                exact
-                path='/password-reset-request'
-                component={PasswordResetRequest}
-              />
-              <Route
-                exact
-                path='/reset-password/:token'
-                component={ResetPassword}
-              />
-            </Switch>
-
-            <Switch>
-              <Route exact path='/register' component={null} />
-
-              <Route exact path='/login' component={null} />
-              <Route exact path='/password-reset-request' component={null} />
-              <Route exact path='/reset-password/:token' component={null} />
-              <Route exact path='/' component={Landing} />
-              <Route exact path='/privacy-policy' component={PrivacyPolicy} />
-              <Route exact path='/terms-of-use' component={TermsOfUse} />
-              <Route exact path='/contact' component={Contact} />
-
-              <PrivateRoute exact path='/dashboard' component={Dashboard} />
-              <PrivateRoute exact path='/pages/:id' component={ViewPage} />
-              <PrivateRoute exact path='/pages' component={CreatePages} />
-              <PrivateRoute exact path='/gallery' component={Gallery} />
-              <PrivateRoute exact path='/books/create' component={CreateBook} />
-              <PrivateRoute exact path='/books/edit' component={EditBook} />
-              <PrivateRoute
-                exact
-                path='/books/cover'
-                component={CreateCoverPage}
-              />
-              <PrivateRoute
-                exact
-                path='/books/edit/cover'
-                component={EditCoverPage}
-              />
-              <PrivateRoute
-                exact
-                path='/books/preview'
-                component={BookPreview}
-              />
-              <PrivateRoute
-                exact
-                path='/books/edit/preview'
-                component={EditBookPreview}
-              />
-              <PrivateRoute exact path='/books' component={ColoringBooks} />
-              <AdminRoute exact path='/admin' component={Admin} />
-              <Route component={NotFound} />
-            </Switch>
-          </div>
-        </Container>
-      </div>
+        </div>
+      </Container>
       <Footer />
     </>
   )

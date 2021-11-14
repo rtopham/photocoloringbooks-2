@@ -11,7 +11,7 @@ const Create = () => {
   const [resetAfterSave, setResetAfterSave] = useState(false)
 
   return (
-    <div className='contentDiv'>
+    <div>
       <h1 className='d-inline text-primary'>Create Pages</h1>{' '}
       <EditImage
         setShowLimitModal={setShowLimitModal}

@@ -14,7 +14,7 @@ const ColoringBooks = ({
   stripe: { subscription }
 }) => {
   return (
-    <div className='contentDiv'>
+    <div>
       <NewBookHeader
         className='mb-4'
         heading='My Books'

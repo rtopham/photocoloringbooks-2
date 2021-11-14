@@ -3,7 +3,7 @@ import { Image } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-const GoogleAd = ({ stripe: { subscription } }) => {
+const GoogleAd = ({ stripe: { subscription }, setDivClass, show }) => {
   useEffect(() => {
     if (
       process.env.REACT_APP_ADS &&
@@ -11,6 +11,16 @@ const GoogleAd = ({ stripe: { subscription } }) => {
     )
       (window.adsbygoogle = window.adsbygoogle || []).push({})
   }, [])
+
+  useEffect(() => {
+    if (show === false || (subscription && subscription.status === 'active'))
+      setDivClass('contentDiv')
+    else if (
+      !subscription ||
+      (subscription && subscription.status !== 'active')
+    )
+      setDivClass('contentDivAds')
+  }, [show, subscription, setDivClass])
 
   let adContent = (
     <div className='mb-4'>
@@ -21,7 +31,10 @@ const GoogleAd = ({ stripe: { subscription } }) => {
     </div>
   )
 
-  if (process.env.REACT_APP_ADS && process.env.REACT_APP_MODE !== 'development')
+  if (
+    process.env.REACT_APP_ADS &&
+    process.env.REACT_APP_MODE !== 'development'
+  ) {
     adContent = (
       <div className=''>
         <ins
@@ -34,9 +47,15 @@ const GoogleAd = ({ stripe: { subscription } }) => {
         ></ins>
       </div>
     )
+  }
 
-  if (!subscription || (subscription && subscription.status !== 'active'))
+  if (show === false) {
+    return null
+  }
+
+  if (!subscription || (subscription && subscription.status !== 'active')) {
     return adContent
+  }
 
   return null
 }
