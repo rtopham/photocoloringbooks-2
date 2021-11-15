@@ -26,7 +26,7 @@ const GoogleAd = ({ stripe: { subscription }, setDivClass, show }) => {
   }, [show, subscription, setDivClass])
 
   let adContent = (
-    <div className='mb-4'>
+    <div className='mb-4 googleAdSize'>
       <Image
         fluid
         src='https://storage.googleapis.com/support-kms-prod/SNP_59D432450939ECC60A21BEDBEE985B1817B1_3094744_en_v2'
@@ -41,7 +41,7 @@ const GoogleAd = ({ stripe: { subscription }, setDivClass, show }) => {
     adContent = (
       <div className=''>
         <ins
-          className='adsbygoogle'
+          className='adsbygoogle mb-4 googleAdSize'
           style={{ display: 'block' }}
           data-ad-client='ca-pub-7288454427087847'
           data-ad-slot='6536318459'
