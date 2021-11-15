@@ -45,7 +45,7 @@ const GoogleAd = ({ stripe: { subscription }, setDivClass, show }) => {
           style={{ display: 'block' }}
           data-ad-client='ca-pub-7288454427087847'
           data-ad-slot='6536318459'
-          data-ad-format='auto'
+          data-ad-format='fluid'
           /* data-full-width-responsive='true' */
         ></ins>
       </div>
