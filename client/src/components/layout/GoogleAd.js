@@ -8,7 +8,9 @@ const GoogleAd = ({ stripe: { subscription }, setDivClass, show }) => {
     if (
       show === true &&
       process.env.REACT_APP_ADS &&
-      process.env.REACT_APP_MODE !== 'development'
+      process.env.REACT_APP_MODE !== 'development' &&
+      subscription &&
+      subscription.status !== 'active'
     )
       (window.adsbygoogle = window.adsbygoogle || []).push({})
   }, [show])
@@ -16,7 +18,6 @@ const GoogleAd = ({ stripe: { subscription }, setDivClass, show }) => {
   useEffect(() => {
     if (show === false || (subscription && subscription.status === 'active')) {
       setDivClass('contentDiv')
-      console.log('set it')
     } else if (
       !subscription ||
       (subscription && subscription.status !== 'active')

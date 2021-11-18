@@ -22,7 +22,8 @@ const BookPreview = ({
         textLine3,
         coverPage,
         coverPageType,
-        footer
+        footer,
+        imageNumber
       },
       pageList,
       pageIndex,
@@ -60,7 +61,8 @@ const BookPreview = ({
         textLine3: textLine3,
         coverPage: coverPage,
         coverPageType: coverPageType,
-        footer: footer
+        footer: footer,
+        imageNumber: imageNumber
       }
     }
     if (current._id) book._id = current._id

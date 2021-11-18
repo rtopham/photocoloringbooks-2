@@ -3,6 +3,8 @@ import jsPDF from 'jspdf'
 export const bookPDF = (book, pageArray) => {
   const { title, captions, pageNumbers } = book
 
+  console.log(pageArray)
+
   const {
     coverPage: {
       coverPageType,
