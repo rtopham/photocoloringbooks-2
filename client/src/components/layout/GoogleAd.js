@@ -14,14 +14,19 @@ const GoogleAd = ({ stripe: { subscription }, setDivClass, show }) => {
   }, [show])
 
   useEffect(() => {
-    if (show === false || (subscription && subscription.status === 'active'))
+    if (show === false || (subscription && subscription.status === 'active')) {
       setDivClass('contentDiv')
-    else if (
+      console.log('set it')
+    } else if (
       !subscription ||
       (subscription && subscription.status !== 'active')
     )
       setDivClass('contentDivAds')
-    if (process.env.REACT_APP_MODE === 'development')
+    if (
+      show !== false &&
+      (!subscription || subscription.status !== 'active') &&
+      process.env.REACT_APP_MODE === 'development'
+    )
       setDivClass('contentDivAdsDev')
   }, [show, subscription, setDivClass])
 

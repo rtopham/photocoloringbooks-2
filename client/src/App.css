@@ -8,9 +8,6 @@
 }
 
 .contentDiv {
-  /*  min-height: calc(100vh - 190px); */
-  /* min-height: calc(100vh - 320px); */
-  /* background-color: palegreen; */
   min-height: 1080px;
 }
 
@@ -40,7 +37,6 @@
 
 div.container {
   max-width: 1010px;
-  /* background-color: lightcoral; */
 }
 
 .galleryImageThumb {
@@ -74,11 +70,6 @@ div.container {
   width: 33%;
 }
 
-.googleAdSize {
-  /* border: solid hotpink; */
-  height: 200px;
-}
-
 @media screen and (min-width: 600px) {
   .authForms {
     max-width: 40%;
@@ -86,6 +77,11 @@ div.container {
   }
   body {
     padding-top: 66px;
+  }
+
+  .googleAdSize {
+    /* border: solid hotpink; */
+    height: 200px;
   }
 }
 
