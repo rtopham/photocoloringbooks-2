@@ -9,10 +9,10 @@ const GoogleAd = ({ stripe: { subscription }, setDivClass, show }) => {
       show === true &&
       process.env.REACT_APP_ADS &&
       process.env.REACT_APP_MODE !== 'development' &&
-      subscription.status !== 'active'
+      (!subscription || subscription.status !== 'active')
     )
       (window.adsbygoogle = window.adsbygoogle || []).push({})
-  }, [show])
+  }, [show, subscription])
 
   useEffect(() => {
     if (show === false || (subscription && subscription.status === 'active')) {
