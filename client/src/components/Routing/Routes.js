@@ -41,6 +41,7 @@ const Routes = () => {
       <Container>
         <Switch>
           <Route exact path='/register' component={null} />
+          <Route exact path='/dashboard' component={null} />
 
           <Route
             exact
